@@ -31,7 +31,7 @@
     emojiElements.forEach((emoji, index) => {
       gsap.to(emoji, {
         y: -10,
-        duration: 0.6,
+        duration: 0.9,
         ease: "power1.inOut",
         repeat: -1,
         yoyo: true,
