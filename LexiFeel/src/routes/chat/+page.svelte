@@ -1,12 +1,13 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  
+  import Icon from '@iconify/svelte';
+
   let messages = [
     {
       id: 1,
       type: 'bot',
       text: "Hi there! I'm here to help you explore and understand your emotions. Let's start with what you notice in your body. How do you physically feel right now?",
-      time: '10:03 PM'
+      time: '07:20 PM'
     }
   ];
   
@@ -40,16 +41,24 @@
       sendMessage();
     }
   }
+  
+  function navigateToTab(tab: string) {
+    currentTab = tab;
+    if (tab === 'emotion-guide') goto('/emotion-guide');
+    else if (tab === 'journal') goto('/journal');
+    else if (tab === 'insights') goto('/insights');
+    else if (tab === 'settings') goto('/settings');
+  }
 </script>
 
 <div class="chat-container">
   <header class="chat-header">
-    <div class="header-content">
-      <div class="bot-avatar">💜</div>
-      <div class="bot-info">
-        <h2 class="bot-name">Feelio</h2>
-        <p class="bot-status">Always here to listen</p>
-      </div>
+    <div class="bot-avatar">
+      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
+    </div>
+    <div class="bot-info">
+      <h2 class="bot-name">Feelio</h2>
+      <p class="bot-status">Always here to listen</p>
     </div>
   </header>
   
@@ -66,7 +75,7 @@
   
   <div class="reflect-section">
     <button class="reflect-button">
-      <span class="sparkle-icon">✨</span>
+      <Icon icon="mdi:sparkles" width="20" />
       Reflect on this conversation
     </button>
   </div>
@@ -79,33 +88,47 @@
         bind:value={inputText}
         on:keypress={handleKeyPress}
       />
-      <button class="emoji-button">😊</button>
-      <button class="voice-button">🎤</button>
-      <button class="send-button" on:click={sendMessage}>
-        <span>➤</span>
+      <button class="icon-button">
+        <Icon icon="mdi:emoticon-happy-outline" width="24" />
+      </button>
+      <button class="icon-button">
+        <Icon icon="mdi:microphone" width="24" />
       </button>
     </div>
+    <button class="send-button" on:click={sendMessage}>
+      <Icon icon="mdi:send" width="24" color="white" />
+    </button>
   </div>
   
   <nav class="bottom-nav">
     <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => currentTab = 'chat'}>
-      <span class="nav-icon">💬</span>
+      <div class="icon-wrapper">
+        <Icon icon="mdi:message-text-outline" width="28" />
+      </div>
       <span class="nav-label">Chat</span>
     </button>
-    <button class="nav-item" on:click={() => currentTab = 'emotion-guide'}>
-      <span class="nav-icon">💗</span>
+    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
+      <div class="icon-wrapper">
+        <Icon icon="mdi:heart-outline" width="28" />
+      </div>
       <span class="nav-label">Emotion Guide</span>
     </button>
-    <button class="nav-item" on:click={() => currentTab = 'journal'}>
-      <span class="nav-icon">📖</span>
+    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
+      <div class="icon-wrapper">
+        <Icon icon="mdi:book-outline" width="28" />
+      </div>
       <span class="nav-label">Journal</span>
     </button>
-    <button class="nav-item" on:click={() => currentTab = 'insights'}>
-      <span class="nav-icon">📊</span>
+    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
+      <div class="icon-wrapper">
+        <Icon icon="mdi:chart-bar" width="28" />
+      </div>
       <span class="nav-label">Insights</span>
     </button>
-    <button class="nav-item" on:click={() => currentTab = 'settings'}>
-      <span class="nav-icon">⚙️</span>
+    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
+      <div class="icon-wrapper">
+        <Icon icon="mdi:cog-outline" width="28" />
+      </div>
       <span class="nav-label">Settings</span>
     </button>
   </nav>
@@ -116,33 +139,28 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
     background: white;
   }
   
   .chat-header {
-    background: white;
-    padding: 15px 20px;
-    border-bottom: 1px solid #e5e7eb;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-  
-  .header-content {
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid #f3f4f6;
   }
   
   .bot-avatar {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
+    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    flex-shrink: 0;
   }
   
   .bot-info {
@@ -151,7 +169,7 @@
   
   .bot-name {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: #1f2937;
   }
@@ -166,12 +184,12 @@
     flex: 1;
     overflow-y: auto;
     padding: 20px;
-    background: #fafafa;
+    background: #fefefe;
   }
   
   .message {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   
   .message.bot {
@@ -183,78 +201,78 @@
   }
   
   .message-content {
-    max-width: 70%;
-    padding: 15px 20px;
-    border-radius: 20px;
-    position: relative;
+    max-width: 80%;
+    padding: 16px 20px;
+    border-radius: 24px;
   }
   
   .message.bot .message-content {
-    background: #e9d5ff;
-    color: #1f2937;
-    border-bottom-left-radius: 5px;
+    background: #f3e8ff;
+    color: #5b21b6;
+    border-bottom-left-radius: 6px;
   }
   
   .message.user .message-content {
     background: #8b5cf6;
     color: white;
-    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 6px;
   }
   
   .message-content p {
     margin: 0 0 8px 0;
-    line-height: 1.5;
+    line-height: 1.6;
+    font-size: 15px;
   }
   
   .message-time {
-    font-size: 11px;
+    font-size: 12px;
     opacity: 0.7;
   }
   
   .reflect-section {
-    padding: 15px 20px;
+    padding: 16px 20px;
     background: white;
-    border-top: 1px solid #e5e7eb;
   }
   
   .reflect-button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: white;
-    border: 2px solid #a78bfa;
-    border-radius: 25px;
-    color: #8b5cf6;
-    font-size: 15px;
+    border: 2px solid #e9d5ff;
+    border-radius: 50px;
+    color: #7c3aed;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
   }
   
   .reflect-button:hover {
-    background: #f5f3ff;
-  }
-  
-  .sparkle-icon {
-    font-size: 18px;
+    background: #faf5ff;
+    border-color: #c4b5fd;
   }
   
   .input-section {
-    padding: 15px 20px 20px;
+    padding: 16px 20px;
     background: white;
-    border-top: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   
   .input-container {
+    flex: 1;
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: #f3f4f6;
-    border-radius: 25px;
-    padding: 8px 15px;
+    gap: 8px;
+    background: white;
+    border: 2px solid #e9d5ff;
+    border-radius: 50px;
+    padding: 8px 20px;
   }
   
   .input-container input {
@@ -271,109 +289,106 @@
     color: #9ca3af;
   }
   
-  .emoji-button, .voice-button {
+  .icon-button {
     background: transparent;
     border: none;
-    font-size: 20px;
     cursor: pointer;
-    padding: 5px;
-    transition: transform 0.2s;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a78bfa;
+    transition: all 0.2s;
   }
   
-  .emoji-button:hover, .voice-button:hover {
+  .icon-button:hover {
+    color: #7c3aed;
     transform: scale(1.1);
   }
   
   .send-button {
-    width: 40px;
-    height: 40px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
     border: none;
-    color: white;
-    font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s;
+    transition: all 0.2s;
+    flex-shrink: 0;
   }
   
   .send-button:hover {
     transform: scale(1.05);
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
   }
   
   .bottom-nav {
     display: flex;
     justify-content: space-around;
     background: white;
-    border-top: 1px solid #e5e7eb;
-    padding: 10px 0;
+    border-top: 1px solid #f3f4f6;
+    padding: 12px 0 16px;
   }
   
   .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 8px 12px;
     transition: all 0.2s;
     border-radius: 12px;
-    min-width: 70px;
+    color: #9ca3af;
+    position: relative;
   }
   
   .nav-item:hover {
-    background: #f5f3ff;
+    background: #faf5ff;
   }
   
   .nav-item.active {
-    color: #8b5cf6;
+    color: #7c3aed;
   }
   
-  .nav-item.active .nav-icon {
-    transform: scale(1.1);
+  .nav-item.active .icon-wrapper {
+    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+    border-radius: 16px;
+    padding: 8px 16px;
   }
   
-  .nav-icon {
-    font-size: 24px;
-    transition: transform 0.2s;
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-item:not(.active) .icon-wrapper {
+    padding: 8px 0;
   }
   
   .nav-label {
     font-size: 12px;
     font-weight: 500;
-    color: #6b7280;
+    transition: color 0.2s;
   }
   
   .nav-item.active .nav-label {
-    color: #8b5cf6;
-  }
-  
-  @media (max-width: 768px) {
-    .message-content {
-      max-width: 85%;
-    }
-    
-    .nav-label {
-      font-size: 11px;
-    }
-    
-    .nav-item {
-      min-width: 60px;
-      padding: 8px 5px;
-    }
-    
-    .nav-icon {
-      font-size: 22px;
-    }
+    color: #7c3aed;
+    font-weight: 600;
   }
   
   @media (min-width: 769px) {
     .chat-container {
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      max-width: 480px;
+      margin: 0 auto;
+      height: 100vh;
     }
   }
 </style>

@@ -23,6 +23,11 @@
 		"vite": "^7.1.10"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.1",
+		"@iconify/svelte": "^5.1.0",
+		"@mui/icons-material": "^7.3.5",
+		"@mui/material": "^7.3.5",
 		"gsap": "^3.13.0"
 	}
 }
