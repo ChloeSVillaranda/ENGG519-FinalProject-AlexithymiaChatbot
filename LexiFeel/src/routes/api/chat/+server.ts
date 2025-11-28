@@ -4,7 +4,6 @@ import type { Message, TrustState } from "$lib/types";
 import { updateTrust } from "$lib/trust";
 
 export const POST: RequestHandler = async ({ request }) => {
-  // 🔍 Check if key exists
   console.log("KEY LOADED?", !!GROQ_API_KEY);
 
   const { messages, trustState } = await request.json();
@@ -32,7 +31,6 @@ export const POST: RequestHandler = async ({ request }) => {
     body: JSON.stringify(payload),
   });
 
-  // ❗ If the OpenAI request failed → log exact error
   if (!res.ok) {
     const errText = await res.text();
     console.error("OPENAI ERROR:", errText);
