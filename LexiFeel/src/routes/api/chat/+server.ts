@@ -1,11 +1,11 @@
 import type { RequestHandler } from "./$types";
-import { OPENAI_API_KEY } from "$env/static/private";
+import { GROQ_API_KEY } from "$env/static/private";
 import type { Message, TrustState } from "$lib/types";
 import { updateTrust } from "$lib/trust";
 
 export const POST: RequestHandler = async ({ request }) => {
   // 🔍 Check if key exists
-  console.log("KEY LOADED?", !!OPENAI_API_KEY);
+  console.log("KEY LOADED?", !!GROQ_API_KEY);
 
   const { messages, trustState } = await request.json();
 
@@ -14,22 +14,22 @@ export const POST: RequestHandler = async ({ request }) => {
 
   const chatHistory = messages.map((m: Message) => ({
     role: m.role,
-    content: m.text
+    content: m.text,
   }));
 
   const payload = {
-    model: "gpt-4.1-mini",
+    model: "llama-3.1-8b-instant",
     messages: [{ role: "system", content: systemPrompt }, ...chatHistory],
-    temperature: 0.4
+    temperature: 0.4,
   };
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${GROQ_API_KEY}`,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
 
   // ❗ If the OpenAI request failed → log exact error
@@ -40,7 +40,7 @@ export const POST: RequestHandler = async ({ request }) => {
     return new Response(
       JSON.stringify({
         error: true,
-        details: errText
+        details: errText,
       }),
       { status: 500 }
     );
@@ -57,8 +57,8 @@ export const POST: RequestHandler = async ({ request }) => {
     text: content,
     time: new Date().toLocaleTimeString("en-US", {
       hour: "numeric",
-      minute: "2-digit"
-    })
+      minute: "2-digit",
+    }),
   };
 
   const updatedMessages = [...messages, botMessage];
@@ -67,7 +67,7 @@ export const POST: RequestHandler = async ({ request }) => {
   return new Response(
     JSON.stringify({
       message: botMessage,
-      trustState: updatedTrust
+      trustState: updatedTrust,
     }),
     { status: 200 }
   );
@@ -103,7 +103,7 @@ Offer short psychoeducational comments.
 You may summarize patterns across messages.
 Use multi-step guidance.
 Still avoid emotional assumptions.
-`
+`,
   };
 
   return base + bands[trust.band];
