@@ -18,7 +18,7 @@
   }
 </script>
 
-<nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+<nav class="bottom-nav" aria-label="Main navigation">
   {#each navItems as item}
     <button 
       class="nav-item {currentTab === item.id ? 'active' : ''}"

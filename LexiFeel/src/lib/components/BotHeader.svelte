@@ -6,7 +6,7 @@
   export let iconName: string = 'mdi:heart';
 </script>
 
-<header class="bot-header" role="banner">
+<header class="bot-header">
   <div class="bot-avatar" aria-hidden="true">
     <Icon icon={iconName} width="32" color="var(--color-primary-700)" />
   </div>

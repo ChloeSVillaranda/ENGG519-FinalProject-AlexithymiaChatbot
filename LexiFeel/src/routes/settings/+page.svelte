@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import PageContainer from '$lib/components/PageContainer.svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
+  import TabNavigation from '$lib/components/TabNavigation.svelte';
+  import SectionCard from '$lib/components/SectionCard.svelte';
+  import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
+  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Icon from '@iconify/svelte';
   
   let currentTab = 'settings';
@@ -14,33 +19,16 @@
   let textSize = 'medium';
   let readingMode = false;
   
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'chat') goto('/chat');
-    else if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
-  }
-  
   function saveChanges() {
     console.log('Saving settings:', { userName, pronouns, selectedTone, dailyCheckIns, weeklyInsights, darkMode, voiceMode, textSize, readingMode });
     // Add save logic here
   }
 </script>
 
-<div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
+<PageContainer>
+  <BotHeader />
   
-  <div class="settings-container">
+  <div class="settings-container" role="main">
     <div class="settings-header">
       <h2 class="settings-title">Settings</h2>
       <p class="settings-subtitle">Customize your Feelio experience</p>
@@ -54,13 +42,13 @@
       </div>
       
       <div class="input-group">
-        <label class="input-label">Name</label>
-        <input type="text" class="text-input" placeholder="Your name" bind:value={userName} />
+        <label class="input-label" for="user-name">Name</label>
+        <input type="text" id="user-name" class="text-input" placeholder="Your name" bind:value={userName} />
       </div>
       
       <div class="input-group">
-        <label class="input-label">Pronouns</label>
-        <input type="text" class="text-input" placeholder="e.g., they/them, she/her, he/him" bind:value={pronouns} />
+        <label class="input-label" for="user-pronouns">Pronouns</label>
+        <input type="text" id="user-pronouns" class="text-input" placeholder="e.g., they/them, she/her, he/him" bind:value={pronouns} />
       </div>
     </div>
     
@@ -205,134 +193,58 @@
     </button>
   </div>
   
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => navigateToTab('chat')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
-</div>
+  <TabNavigation {currentTab} />
+</PageContainer>
 
 <style>
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 100%;
-    background: white;
-  }
-  
-  .chat-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    background: white;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  
-  .bot-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .bot-info {
-    flex: 1;
-  }
-  
-  .bot-name {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .bot-status {
-    margin: 2px 0 0 0;
-    font-size: 14px;
-    color: #a78bfa;
-  }
-  
   .settings-container {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
-    background: #fefefe;
+    padding: var(--spacing-5);
+    background: var(--color-neutral-50);
   }
   
   .settings-header {
-    margin-bottom: 24px;
+    margin-bottom: var(--spacing-6);
   }
   
   .settings-title {
     margin: 0;
-    font-size: 28px;
-    font-weight: 600;
-    color: #6b21a8;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-800);
   }
   
   .settings-subtitle {
-    margin: 4px 0 0 0;
-    font-size: 16px;
-    color: #a78bfa;
+    margin: var(--spacing-1) 0 0 0;
+    font-size: var(--font-size-md);
+    color: var(--color-primary-500);
   }
   
   .settings-card {
     background: white;
-    border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-5);
+    margin-bottom: var(--spacing-5);
   }
   
   .card-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-5);
   }
   
   .card-header h3 {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-800);
   }
   
   .input-group {
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-4);
   }
   
   .input-group:last-child {
@@ -341,37 +253,37 @@
   
   .input-label {
     display: block;
-    font-size: 15px;
-    font-weight: 600;
-    color: #7c3aed;
-    margin-bottom: 8px;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-700);
+    margin-bottom: var(--spacing-2);
   }
   
   .text-input {
     width: 100%;
-    padding: 14px 16px;
-    border: 1px solid #e9d5ff;
-    border-radius: 16px;
-    font-size: 15px;
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 1px solid var(--color-primary-200);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
     font-family: inherit;
     outline: none;
-    color: #1f2937;
-    background: #fefefe;
+    color: var(--color-neutral-800);
+    background: var(--color-neutral-50);
     box-sizing: border-box;
   }
   
   .text-input::placeholder {
-    color: #c4b5fd;
+    color: var(--color-primary-400);
   }
   
   .text-input:focus {
-    border-color: #a78bfa;
+    border-color: var(--color-primary-500);
   }
   
   .tone-options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--spacing-3);
   }
   
   .tone-option {
@@ -388,126 +300,55 @@
   .tone-content {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px;
-    border: 2px solid #f3f4f6;
-    border-radius: 16px;
-    transition: all 0.2s;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    border: 2px solid var(--color-neutral-200);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
   }
   
   .tone-option.selected .tone-content {
-    border-color: #a78bfa;
-    background: #faf5ff;
+    border-color: var(--color-primary-500);
+    background: var(--color-primary-50);
   }
   
   .tone-indicator {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
-    border: 2px solid #e9d5ff;
+    border-radius: var(--radius-circle);
+    border: 2px solid var(--color-primary-200);
     background: white;
-    transition: all 0.2s;
+    transition: all var(--transition-base);
     flex-shrink: 0;
   }
   
   .tone-option.selected .tone-indicator {
-    border-color: #7c3aed;
-    background: #7c3aed;
+    border-color: var(--color-primary-700);
+    background: var(--color-primary-700);
     box-shadow: inset 0 0 0 4px white;
   }
   
   .tone-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--spacing-1);
   }
   
   .tone-label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-800);
   }
   
   .tone-description {
-    font-size: 14px;
-    color: #a78bfa;
+    font-size: var(--font-size-sm);
+    color: var(--color-primary-500);
   }
   
   .toggle-group {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
-  
-  .toggle-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .toggle-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-  }
-  
-  .toggle-label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .toggle-description {
-    font-size: 14px;
-    color: #a78bfa;
-  }
-  
-  .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 52px;
-    height: 28px;
-    flex-shrink: 0;
-  }
-  
-  .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #e5e7eb;
-    transition: 0.3s;
-    border-radius: 28px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.3s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(24px);
+    gap: var(--spacing-4);
   }
   
   .setting-button {
@@ -515,13 +356,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: var(--spacing-4);
     background: white;
-    border: 1px solid #e9d5ff;
-    border-radius: 16px;
+    border: 1px solid var(--color-primary-200);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    margin-bottom: 12px;
-    transition: all 0.2s;
+    margin-bottom: var(--spacing-3);
+    transition: all var(--transition-base);
   }
   
   .setting-button:last-of-type {
@@ -529,104 +370,38 @@
   }
   
   .setting-button:hover {
-    background: #faf5ff;
-    border-color: #c4b5fd;
+    background: var(--color-primary-50);
+    border-color: var(--color-primary-400);
   }
   
   .button-label {
-    font-size: 15px;
-    font-weight: 600;
-    color: #7c3aed;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-700);
   }
   
   .privacy-note {
-    margin: 16px 0 0 0;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #a78bfa;
+    margin: var(--spacing-4) 0 0 0;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+    color: var(--color-primary-500);
   }
   
   .save-button {
     width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    padding: var(--spacing-4);
+    background: var(--gradient-primary);
     border: none;
-    border-radius: 50px;
+    border-radius: var(--radius-full);
     color: white;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
-    transition: transform 0.2s;
-    margin-bottom: 20px;
+    transition: transform var(--transition-base);
+    margin-bottom: var(--spacing-5);
   }
   
   .save-button:hover {
     transform: translateY(-2px);
-  }
-  
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #f3f4f6;
-    padding: 12px 0 16px;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px 12px;
-    transition: all 0.2s;
-    border-radius: 12px;
-    color: #9ca3af;
-  }
-  
-  .nav-item:hover {
-    background: #faf5ff;
-  }
-  
-  .nav-item.active {
-    color: #7c3aed;
-  }
-  
-  .nav-item.active .icon-wrapper {
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 16px;
-    padding: 8px 16px;
-  }
-  
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item:not(.active) .icon-wrapper {
-    padding: 8px 0;
-  }
-  
-  .nav-label {
-    font-size: 12px;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  
-  .nav-item.active .nav-label {
-    color: #7c3aed;
-    font-weight: 600;
-  }
-  
-  @media (min-width: 769px) {
-    .chat-container {
-      max-width: 480px;
-      margin: 0 auto;
-      height: 100vh;
-    }
   }
 </style>
