@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import PageContainer from '$lib/components/PageContainer.svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
+  import TabNavigation from '$lib/components/TabNavigation.svelte';
+  import SectionCard from '$lib/components/SectionCard.svelte';
   import Icon from '@iconify/svelte';
   
   let currentTab = 'insights';
@@ -20,29 +23,12 @@
     { day: 'Sat', value: 10 },
     { day: 'Sun', value: 8 }
   ];
-  
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'chat') goto('/chat');
-    else if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
-  }
 </script>
 
-<div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
+<PageContainer>
+  <BotHeader />
   
-  <div class="insights-container">
+  <div class="insights-container" role="main">
     <div class="insights-header">
       <h2 class="insights-title">Your Insights</h2>
       <p class="insights-subtitle">Emotional growth over time</p>
@@ -51,7 +37,7 @@
     <!-- Progress Message -->
     <div class="progress-card">
       <div class="progress-icon">
-        <Icon icon="mdi:heart-circle" width="48" color="#7c3aed" />
+        <Icon icon="mdi:heart-circle" width="48" color="var(--color-primary-700)" />
       </div>
       <div class="progress-content">
         <h3 class="progress-title">Great progress!</h3>
@@ -60,9 +46,9 @@
     </div>
     
     <!-- Most Common Emotions -->
-    <div class="emotions-card">
+    <SectionCard>
       <div class="card-title-row">
-        <Icon icon="mdi:heart-outline" width="24" color="#7c3aed" />
+        <Icon icon="mdi:heart-outline" width="24" color="var(--color-primary-700)" />
         <h3 class="card-title">Most Common Emotions</h3>
       </div>
       <div class="emotions-list">
@@ -79,26 +65,26 @@
           </div>
         {/each}
       </div>
-    </div>
+    </SectionCard>
     
     <!-- Stats Cards -->
     <div class="stats-grid">
       <div class="stat-card">
-        <Icon icon="mdi:calendar-blank" width="40" color="#a78bfa" />
+        <Icon icon="mdi:calendar-blank" width="40" color="var(--color-primary-500)" />
         <div class="stat-number">28</div>
         <div class="stat-label">Days Tracking</div>
       </div>
       <div class="stat-card">
-        <Icon icon="mdi:star-outline" width="40" color="#a78bfa" />
+        <Icon icon="mdi:star-outline" width="40" color="var(--color-primary-500)" />
         <div class="stat-number">156</div>
         <div class="stat-label">Emotions Logged</div>
       </div>
     </div>
     
     <!-- Mood Trend -->
-    <div class="mood-trend-card">
+    <SectionCard>
       <div class="card-title-row">
-        <Icon icon="mdi:chart-line" width="24" color="#7c3aed" />
+        <Icon icon="mdi:chart-line" width="24" color="var(--color-primary-700)" />
         <h3 class="card-title">Mood Trend (Last 7 Days)</h3>
       </div>
       <div class="chart-container">
@@ -109,17 +95,17 @@
           <span class="y-label">0</span>
         </div>
         <div class="chart-content">
-          <svg class="mood-chart" viewBox="0 0 280 120" preserveAspectRatio="none">
+          <svg class="mood-chart" viewBox="0 0 280 120" preserveAspectRatio="none" aria-label="Mood trend chart">
             <defs>
               <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:0.3" />
-                <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.05" />
+                <stop offset="0%" style="stop-color:var(--color-primary-500);stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:var(--color-primary-500);stop-opacity:0.05" />
               </linearGradient>
             </defs>
             <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
                   fill="url(#gradient)" stroke="none"/>
             <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
-                  fill="none" stroke="#8b5cf6" stroke-width="3"/>
+                  fill="none" stroke="var(--color-primary-600)" stroke-width="3"/>
           </svg>
           <div class="chart-x-axis">
             {#each moodData as data}
@@ -128,10 +114,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </SectionCard>
     
     <!-- Emotional Growth Progress -->
-    <div class="growth-card">
+    <SectionCard>
       <h3 class="card-title">Emotional Growth Progress</h3>
       <div class="progress-bars">
         <div class="progress-item">
@@ -140,7 +126,7 @@
             <span class="progress-percentage">85%</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+            <div class="progress-fill" style="width: 85%;"></div>
           </div>
         </div>
         <div class="progress-item">
@@ -149,7 +135,7 @@
             <span class="progress-percentage">72%</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill" style="width: 72%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+            <div class="progress-fill" style="width: 72%;"></div>
           </div>
         </div>
         <div class="progress-item">
@@ -158,124 +144,49 @@
             <span class="progress-percentage">68%</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+            <div class="progress-fill" style="width: 68%;"></div>
           </div>
         </div>
       </div>
-    </div>
+    </SectionCard>
   </div>
   
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => navigateToTab('chat')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
-</div>
+  <TabNavigation {currentTab} />
+</PageContainer>
+
 
 <style>
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 100%;
-    background: white;
-  }
-  
-  .chat-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    background: white;
-    border-bottom: 1px solid #f3f4f6;
-  }
-  
-  .bot-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .bot-info {
-    flex: 1;
-  }
-  
-  .bot-name {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .bot-status {
-    margin: 2px 0 0 0;
-    font-size: 14px;
-    color: #a78bfa;
-  }
-  
   .insights-container {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
-    background: #fefefe;
+    padding: var(--spacing-5);
+    background: var(--color-neutral-50);
   }
   
   .insights-header {
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-5);
   }
   
   .insights-title {
     margin: 0;
-    font-size: 28px;
-    font-weight: 600;
-    color: #6b21a8;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-800);
   }
   
   .insights-subtitle {
-    margin: 4px 0 0 0;
-    font-size: 16px;
-    color: #a78bfa;
+    margin: var(--spacing-1) 0 0 0;
+    font-size: var(--font-size-md);
+    color: var(--color-primary-500);
   }
   
   .progress-card {
-    background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    background: var(--gradient-primary-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-5);
+    margin-bottom: var(--spacing-5);
     display: flex;
-    gap: 16px;
+    gap: var(--spacing-4);
     align-items: flex-start;
   }
   
@@ -288,88 +199,80 @@
   }
   
   .progress-title {
-    margin: 0 0 8px 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #6b21a8;
+    margin: 0 0 var(--spacing-2) 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-800);
   }
   
   .progress-text {
     margin: 0;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #6b21a8;
-  }
-  
-  .emotions-card, .mood-trend-card, .growth-card {
-    background: white;
-    border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-primary-800);
   }
   
   .card-title-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
   }
   
   .card-title {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-800);
   }
   
   .emotions-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--spacing-4);
   }
   
   .emotion-row {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--spacing-3);
   }
   
   .emotion-info {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--spacing-2);
     min-width: 100px;
   }
   
   .emotion-emoji {
-    font-size: 24px;
+    font-size: var(--font-size-2xl);
   }
   
   .emotion-label {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1f2937;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-800);
   }
   
   .emotion-bar-container {
     flex: 1;
-    height: 32px;
-    background: #f3f4f6;
-    border-radius: 16px;
+    height: var(--spacing-8);
+    background: var(--color-neutral-200);
+    border-radius: var(--radius-md);
     overflow: hidden;
   }
   
   .emotion-bar {
     height: 100%;
-    border-radius: 16px;
-    transition: width 0.3s ease;
+    border-radius: var(--radius-md);
+    transition: width var(--transition-slow);
   }
   
   .emotion-count {
-    font-size: 18px;
-    font-weight: 600;
-    color: #7c3aed;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-700);
     min-width: 40px;
     text-align: right;
   }
@@ -377,49 +280,49 @@
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-5);
   }
   
   .stat-card {
     background: white;
-    border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 24px;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: var(--spacing-3);
   }
   
   .stat-number {
-    font-size: 32px;
-    font-weight: 600;
-    color: #6b21a8;
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-800);
   }
   
   .stat-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #a78bfa;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-500);
     text-align: center;
   }
   
   .chart-container {
     display: flex;
-    gap: 8px;
+    gap: var(--spacing-2);
   }
   
   .chart-y-axis {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: var(--spacing-2) 0;
   }
   
   .y-label {
-    font-size: 12px;
-    color: #a78bfa;
+    font-size: var(--font-size-xs);
+    color: var(--color-primary-500);
   }
   
   .chart-content {
@@ -434,24 +337,24 @@
   .chart-x-axis {
     display: flex;
     justify-content: space-between;
-    padding-top: 8px;
+    padding-top: var(--spacing-2);
   }
   
   .x-label {
-    font-size: 12px;
-    color: #a78bfa;
+    font-size: var(--font-size-xs);
+    color: var(--color-primary-500);
   }
   
   .progress-bars {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: var(--spacing-5);
   }
   
   .progress-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--spacing-2);
   }
   
   .progress-label-row {
@@ -461,93 +364,28 @@
   }
   
   .progress-label {
-    font-size: 15px;
-    font-weight: 500;
-    color: #6b21a8;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-800);
   }
   
   .progress-percentage {
-    font-size: 15px;
-    font-weight: 600;
-    color: #7c3aed;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary-700);
   }
   
   .progress-track {
     height: 12px;
-    background: #f3f4f6;
-    border-radius: 6px;
+    background: var(--color-neutral-200);
+    border-radius: var(--radius-sm);
     overflow: hidden;
   }
   
   .progress-fill {
     height: 100%;
-    border-radius: 6px;
-    transition: width 0.3s ease;
-  }
-  
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #f3f4f6;
-    padding: 12px 0 16px;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px 12px;
-    transition: all 0.2s;
-    border-radius: 12px;
-    color: #9ca3af;
-  }
-  
-  .nav-item:hover {
-    background: #faf5ff;
-  }
-  
-  .nav-item.active {
-    color: #7c3aed;
-  }
-  
-  .nav-item.active .icon-wrapper {
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 16px;
-    padding: 8px 16px;
-  }
-  
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item:not(.active) .icon-wrapper {
-    padding: 8px 0;
-  }
-  
-  .nav-label {
-    font-size: 12px;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  
-  .nav-item.active .nav-label {
-    color: #7c3aed;
-    font-weight: 600;
-  }
-  
-  @media (min-width: 769px) {
-    .chat-container {
-      max-width: 480px;
-      margin: 0 auto;
-      height: 100vh;
-    }
+    background: var(--gradient-primary);
+    border-radius: var(--radius-sm);
+    transition: width var(--transition-slow);
   }
 </style>
