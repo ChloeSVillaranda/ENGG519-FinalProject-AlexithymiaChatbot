@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
   
-  export let onClick: () => void = () => {};
+  export let onClick: (() => void) | undefined = undefined;
   export let variant: 'primary' | 'secondary' | 'outline' = 'primary';
   export let icon: string | null = null;
   export let fullWidth: boolean = false;

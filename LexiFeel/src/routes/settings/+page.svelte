@@ -87,64 +87,48 @@
     <!-- Notifications Section -->
     <div class="settings-card">
       <div class="card-header">
-        <Icon icon="mdi:bell-outline" width="24" color="#7c3aed" />
+        <Icon icon="mdi:bell-outline" width="24" color="var(--color-primary-700)" />
         <h3>Notifications</h3>
       </div>
       
       <div class="toggle-group">
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Daily Check-ins</span>
-            <span class="toggle-description">Remind me to reflect daily</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={dailyCheckIns} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Daily Check-ins"
+          description="Remind me to reflect daily"
+          bind:checked={dailyCheckIns}
+          id="daily-checkins"
+        />
         
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Weekly Insights</span>
-            <span class="toggle-description">Summary of my emotional progress</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={weeklyInsights} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Weekly Insights"
+          description="Summary of my emotional progress"
+          bind:checked={weeklyInsights}
+          id="weekly-insights"
+        />
       </div>
     </div>
     
     <!-- Appearance Section -->
     <div class="settings-card">
       <div class="card-header">
-        <Icon icon="mdi:moon-waning-crescent" width="24" color="#7c3aed" />
+        <Icon icon="mdi:moon-waning-crescent" width="24" color="var(--color-primary-700)" />
         <h3>Appearance</h3>
       </div>
       
       <div class="toggle-group">
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Dark Mode</span>
-            <span class="toggle-description">Deep purple theme for night</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={darkMode} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Dark Mode"
+          description="Deep purple theme for night"
+          bind:checked={darkMode}
+          id="dark-mode"
+        />
         
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Voice Mode</span>
-            <span class="toggle-description">Feelio responds with voice</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={voiceMode} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Voice Mode"
+          description="Feelio responds with voice"
+          bind:checked={voiceMode}
+          id="voice-mode"
+        />
       </div>
     </div>
     

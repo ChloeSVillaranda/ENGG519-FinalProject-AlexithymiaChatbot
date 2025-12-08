@@ -63,7 +63,7 @@
         bind:value={todayEvents}
         aria-label="What happened today"
       ></textarea>
-      <PrimaryButton variant="outline" icon="mdi:creation">
+      <PrimaryButton variant="outline" icon="mdi:creation" onClick={() => console.log('AI suggestions')}>
         AI suggestions
       </PrimaryButton>
     </SectionCard>
