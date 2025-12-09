@@ -126,7 +126,7 @@
             <span class="progress-percentage">85%</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill" style="width: 85%;"></div>
+            <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
           </div>
         </div>
         <div class="progress-item">
@@ -135,7 +135,7 @@
             <span class="progress-percentage">72%</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill" style="width: 72%;"></div>
+            <div class="progress-fill" style="width: 72%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
           </div>
         </div>
         <div class="progress-item">
@@ -144,7 +144,7 @@
             <span class="progress-percentage">68%</span>
           </div>
           <div class="progress-track">
-            <div class="progress-fill" style="width: 68%;"></div>
+            <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
           </div>
         </div>
       </div>
