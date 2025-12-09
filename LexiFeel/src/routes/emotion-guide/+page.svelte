@@ -1,18 +1,124 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
+  import EmotionModal from '$lib/components/EmotionModal.svelte';
   
   let currentTab = 'emotion-guide';
+  let selectedEmotion: any = null;
   
   const emotions = [
-    { name: 'Happy', emoji: '😊', color: '#fef08a', textColor: '#854d0e' },
-    { name: 'Sad', emoji: '😔', color: '#bfdbfe', textColor: '#1e3a8a' },
-    { name: 'Anxious', emoji: '😰', color: '#e9d5ff', textColor: '#6b21a8' },
-    { name: 'Angry', emoji: '😤', color: '#fecaca', textColor: '#991b1b' },
-    { name: 'Calm', emoji: '😌', color: '#bbf7d0', textColor: '#14532d' },
-    { name: 'Confused', emoji: '😕', color: '#fed7aa', textColor: '#92400e' },
-    { name: 'Excited', emoji: '🤩', color: '#fbcfe8', textColor: '#831843' },
-    { name: 'Tired', emoji: '😴', color: '#e0e7ff', textColor: '#3730a3' }
+    { 
+      name: 'Happy', 
+      emoji: '😊', 
+      color: '#fef08a', 
+      textColor: '#854d0e',
+      description: 'Happiness is a positive emotion characterized by feelings of joy, contentment, and satisfaction.',
+      bodySensations: [
+        'Lightness in chest or body',
+        'Relaxed muscles',
+        'Smiling or upturned mouth',
+        'Increased energy',
+        'Warm feeling throughout body'
+      ]
+    },
+    { 
+      name: 'Sad', 
+      emoji: '😔', 
+      color: '#bfdbfe', 
+      textColor: '#1e3a8a',
+      description: 'Sadness is a natural response to loss, disappointment, or difficult situations.',
+      bodySensations: [
+        'Heavy feeling in chest or body',
+        'Tight or lump in throat',
+        'Low energy, feeling tired',
+        'Tears or urge to cry',
+        'Slumped posture, looking down'
+      ]
+    },
+    { 
+      name: 'Anxious', 
+      emoji: '😰', 
+      color: '#e9d5ff', 
+      textColor: '#6b21a8',
+      description: 'Anxiety is a response to perceived threat or uncertainty, often about future events.',
+      bodySensations: [
+        'Racing or pounding heart',
+        'Shallow or rapid breathing',
+        'Tightness in chest',
+        'Sweating or clammy hands',
+        'Restlessness or difficulty sitting still'
+      ]
+    },
+    { 
+      name: 'Angry', 
+      emoji: '😤', 
+      color: '#fecaca', 
+      textColor: '#991b1b',
+      description: 'Anger is a response to perceived injustice, frustration, or when boundaries are crossed.',
+      bodySensations: [
+        'Heat rising in face or body',
+        'Jaw clenching or teeth grinding',
+        'Fists clenching',
+        'Tense muscles',
+        'Increased heart rate'
+      ]
+    },
+    { 
+      name: 'Calm', 
+      emoji: '😌', 
+      color: '#bbf7d0', 
+      textColor: '#14532d',
+      description: 'Calmness is a state of peaceful relaxation and mental clarity.',
+      bodySensations: [
+        'Slow, deep breathing',
+        'Relaxed shoulders',
+        'Soft facial expression',
+        'Steady heart rate',
+        'Loose, comfortable muscles'
+      ]
+    },
+    { 
+      name: 'Confused', 
+      emoji: '😕', 
+      color: '#fed7aa', 
+      textColor: '#92400e',
+      description: 'Confusion occurs when things don\'t make sense or when faced with unclear information.',
+      bodySensations: [
+        'Furrowed brow',
+        'Head tilting',
+        'Tightness in forehead',
+        'Difficulty focusing eyes',
+        'Tension in neck or shoulders'
+      ]
+    },
+    { 
+      name: 'Excited', 
+      emoji: '🤩', 
+      color: '#fbcfe8', 
+      textColor: '#831843',
+      description: 'Excitement is an energized positive emotion in response to something anticipated or enjoyable.',
+      bodySensations: [
+        'Butterflies in stomach',
+        'Increased heart rate',
+        'Wide eyes or smile',
+        'Bouncing or fidgeting',
+        'Burst of energy'
+      ]
+    },
+    { 
+      name: 'Tired', 
+      emoji: '😴', 
+      color: '#e0e7ff', 
+      textColor: '#3730a3',
+      description: 'Tiredness is your body\'s signal that it needs rest and recovery.',
+      bodySensations: [
+        'Heavy eyelids',
+        'Yawning',
+        'Low energy or sluggishness',
+        'Difficulty concentrating',
+        'Body feels heavy or weak'
+      ]
+    }
   ];
   
   function navigateToTab(tab: string) {
@@ -22,6 +128,14 @@
     else if (tab === 'journal') goto('/journal');
     else if (tab === 'insights') goto('/insights');
     else if (tab === 'settings') goto('/settings');
+  }
+  
+  function openEmotionModal(emotion: any) {
+    selectedEmotion = emotion;
+  }
+  
+  function closeEmotionModal() {
+    selectedEmotion = null;
   }
 </script>
 
@@ -38,14 +152,19 @@
   
   <div class="emotion-guide-container">
     <div class="guide-header">
-      <Icon icon="mdi:book-open-variant" width="24" color="#7c3aed" />
+      <Icon icon="mdi:book-open-variant" width={24} color="#7c3aed" />
       <h2>Emotion Guide</h2>
     </div>
     <p class="guide-subtitle">Tap any emotion to learn how it feels in your body</p>
     
     <div class="emotions-grid">
       {#each emotions as emotion}
-        <button class="emotion-card" style="background: {emotion.color};">
+        <button 
+          class="emotion-card" 
+          style="background: {emotion.color};"
+          on:click={() => openEmotionModal(emotion)}
+          aria-label="Learn about {emotion.name}"
+        >
           <span class="emotion-emoji">{emotion.emoji}</span>
           <span class="emotion-name" style="color: {emotion.textColor};">{emotion.name}</span>
         </button>
@@ -86,6 +205,8 @@
     </button>
   </nav>
 </div>
+
+<EmotionModal emotion={selectedEmotion} onClose={closeEmotionModal} />
 
 <style>
   .chat-container {
