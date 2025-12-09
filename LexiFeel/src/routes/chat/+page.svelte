@@ -2,7 +2,8 @@
   import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
   import type { Message, TrustState } from '$lib/types';
-  
+  import { debugTrustOverride } from '$lib/stores/trustOverride';
+
   let inputText = '';
   let currentTab = 'chat';
   let trustState: TrustState | null = null;
@@ -34,7 +35,7 @@
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages, trustState })
+      body: JSON.stringify({ messages, trustState, debugTrustOverride: $debugTrustOverride })
     });
 
     if (!res.ok) {

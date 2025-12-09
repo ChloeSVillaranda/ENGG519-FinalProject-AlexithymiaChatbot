@@ -1,9 +1,12 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
-  
+  import { debugTrustOverride } from '$lib/stores/trustOverride';
+
   let currentTab = 'settings';
-  
+  let selectedOverride: string | null = null;
+
+  // Existing settings fields (kept exactly as you had them)
   let userName = '';
   let pronouns = '';
   let selectedTone = 'empathetic';
@@ -13,7 +16,8 @@
   let voiceMode = false;
   let textSize = 'medium';
   let readingMode = false;
-  
+
+  /** Navigation handler */
   function navigateToTab(tab: string) {
     currentTab = tab;
     if (tab === 'chat') goto('/chat');
@@ -22,12 +26,26 @@
     else if (tab === 'insights') goto('/insights');
     else if (tab === 'settings') goto('/settings');
   }
-  
+
+  /** Save button handler */
   function saveChanges() {
-    console.log('Saving settings:', { userName, pronouns, selectedTone, dailyCheckIns, weeklyInsights, darkMode, voiceMode, textSize, readingMode });
-    // Add save logic here
+    console.log('Saving settings:', { 
+      userName, 
+      pronouns, 
+      selectedTone, 
+      dailyCheckIns, 
+      weeklyInsights, 
+      darkMode, 
+      voiceMode, 
+      textSize, 
+      readingMode 
+    });
   }
+
+  /** Sync the override to the store anytime the dropdown changes */
+  $: debugTrustOverride.set(selectedOverride);
 </script>
+
 
 <div class="chat-container">
   <header class="chat-header">
@@ -46,6 +64,26 @@
       <p class="settings-subtitle">Customize your Feelio experience</p>
     </div>
     
+    <!-- Trust Override (for testing) -->
+    <div class="settings-card">
+      <div class="card-header">
+        <Icon icon="mdi:tune" width="24" color="#7c3aed" />
+        <h3>Trust Band Override (Testing Only)</h3>
+      </div>
+
+      <select bind:value={selectedOverride} class="text-input" style="margin-top: 10px;">
+        <option value={null}>No override (normal behavior)</option>
+        <option value="A_VERY_LOW">A — Very Low</option>
+        <option value="B_CAUTIOUS">B — Cautious</option>
+        <option value="C_MODERATE">C — Moderate</option>
+        <option value="D_HIGH">D — High</option>
+      </select>
+
+      <p style="font-size: 12px; color: #999; margin-top: 8px;">
+        Forces the chatbot into a specific trust band for research testing.
+      </p>
+    </div>
+
     <!-- Profile Section -->
     <div class="settings-card">
       <div class="card-header">

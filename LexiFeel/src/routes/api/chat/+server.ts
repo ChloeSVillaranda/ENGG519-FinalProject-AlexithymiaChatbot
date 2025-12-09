@@ -6,10 +6,22 @@ import { updateTrust } from "$lib/trust";
 export const POST: RequestHandler = async ({ request }) => {
   console.log("KEY LOADED?", !!GROQ_API_KEY);
 
-  const { messages, trustState } = await request.json();
+  const { messages, trustState, debugTrustOverride } = await request.json();
 
-  const newTrust = updateTrust(messages, trustState);
-  const systemPrompt = buildSystemPrompt(newTrust);
+  // 1️⃣ NORMAL trust update
+  let newTrust = updateTrust(messages, trustState);
+
+  // 2️⃣ OVERRIDE: Force band + freeze trustFactor
+  let effectiveTrust: TrustState = debugTrustOverride
+    ? {
+        ...newTrust,
+        band: debugTrustOverride,
+        trustFactor: 0, // irrelevant when overridden
+      }
+    : newTrust;
+
+  // 3️⃣ Build system prompt with effective band
+  const systemPrompt = buildSystemPrompt(effectiveTrust);
 
   const chatHistory = messages.map((m: Message) => ({
     role: m.role,
@@ -60,12 +72,16 @@ export const POST: RequestHandler = async ({ request }) => {
   };
 
   const updatedMessages = [...messages, botMessage];
-  const updatedTrust = updateTrust(updatedMessages, newTrust);
+
+  // 4️⃣ Recompute trust ONLY if override is OFF
+  const finalTrust = debugTrustOverride
+    ? effectiveTrust // frozen
+    : updateTrust(updatedMessages, newTrust); // dynamic
 
   return new Response(
     JSON.stringify({
       message: botMessage,
-      trustState: updatedTrust,
+      trustState: finalTrust,
     }),
     { status: 200 }
   );
