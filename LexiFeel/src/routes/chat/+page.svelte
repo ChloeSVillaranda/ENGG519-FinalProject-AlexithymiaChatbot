@@ -147,16 +147,16 @@
   .chat-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
+    gap: clamp(10px, 2vw, 12px);
+    padding: clamp(14px, 3vw, 16px) clamp(16px, 4vw, 20px);
     background: white;
     border-bottom: 1px solid #f3f4f6;
     flex-shrink: 0;
   }
   
   .bot-avatar {
-    width: 50px;
-    height: 50px;
+    width: clamp(45px, 10vw, 60px);
+    height: clamp(45px, 10vw, 60px);
     border-radius: 50%;
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     display: flex;
@@ -172,14 +172,14 @@
   
   .bot-name {
     margin: 0;
-    font-size: 18px;
+    font-size: clamp(16px, 3.5vw, 20px);
     font-weight: 600;
     color: #1f2937;
   }
   
   .bot-status {
     margin: 2px 0 0 0;
-    font-size: 13px;
+    font-size: clamp(12px, 2.5vw, 14px);
     color: #a78bfa;
   }
   
@@ -187,13 +187,13 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 16px;
+    padding: clamp(14px, 3vw, 20px);
     background: #fefefe;
   }
   
   .message {
     display: flex;
-    margin-bottom: 14px;
+    margin-bottom: clamp(12px, 2.5vw, 16px);
   }
   
   .message.bot {
@@ -206,8 +206,8 @@
   
   .message-content {
     max-width: 80%;
-    padding: 14px 18px;
-    border-radius: 22px;
+    padding: clamp(12px, 3vw, 16px) clamp(16px, 3.5vw, 20px);
+    border-radius: clamp(18px, 4vw, 24px);
   }
   
   .message.bot .message-content {
@@ -223,37 +223,37 @@
   }
   
   .message-content p {
-    margin: 0 0 6px 0;
+    margin: 0 0 clamp(5px, 1.5vw, 8px) 0;
     line-height: 1.5;
-    font-size: 14px;
+    font-size: clamp(13px, 3vw, 15px);
   }
   
   .message-time {
-    font-size: 11px;
+    font-size: clamp(10px, 2.2vw, 12px);
     opacity: 0.7;
   }
   
   .reflect-section {
-    padding: 14px 16px;
+    padding: clamp(12px, 3vw, 16px) clamp(14px, 3.5vw, 20px);
     background: white;
     flex-shrink: 0;
   }
   
   .reflect-button {
     width: 100%;
-    padding: 12px;
+    padding: clamp(10px, 2.5vw, 14px);
     background: white;
     border: 2px solid #e9d5ff;
     border-radius: 50px;
     color: #7c3aed;
-    font-size: 15px;
+    font-size: clamp(14px, 3vw, 16px);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: clamp(6px, 1.5vw, 10px);
   }
   
   .reflect-button:hover {
@@ -262,11 +262,11 @@
   }
   
   .input-section {
-    padding: 14px 16px;
+    padding: clamp(12px, 3vw, 16px) clamp(14px, 3.5vw, 20px);
     background: white;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: clamp(8px, 2vw, 12px);
     flex-shrink: 0;
   }
   
@@ -274,11 +274,11 @@
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: clamp(5px, 1.5vw, 8px);
     background: white;
     border: 2px solid #e9d5ff;
     border-radius: 50px;
-    padding: 6px 16px;
+    padding: clamp(5px, 1.5vw, 8px) clamp(14px, 3vw, 20px);
     min-width: 0;
   }
   
@@ -286,8 +286,8 @@
     flex: 1;
     border: none;
     background: transparent;
-    font-size: 14px;
-    padding: 8px;
+    font-size: clamp(13px, 3vw, 15px);
+    padding: clamp(6px, 1.5vw, 8px);
     outline: none;
     color: #1f2937;
     min-width: 0;
@@ -316,8 +316,8 @@
   }
   
   .send-button {
-    width: 48px;
-    height: 48px;
+    width: clamp(44px, 10vw, 56px);
+    height: clamp(44px, 10vw, 56px);
     border-radius: 50%;
     background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
     border: none;
@@ -339,7 +339,7 @@
     justify-content: space-around;
     background: white;
     border-top: 1px solid #f3f4f6;
-    padding: 10px 0 12px;
+    padding: clamp(8px, 2vw, 12px) 0;
     flex-shrink: 0;
   }
   
@@ -351,13 +351,13 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 6px 8px;
+    padding: clamp(5px, 1.5vw, 8px) clamp(6px, 1.5vw, 12px);
     transition: all 0.2s;
     border-radius: 12px;
     color: #9ca3af;
     min-width: 0;
     flex: 1;
-    max-width: 80px;
+    max-width: clamp(70px, 15vw, 90px);
   }
   
   .nav-item:hover {
@@ -371,7 +371,7 @@
   .nav-item.active .icon-wrapper {
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     border-radius: 14px;
-    padding: 6px 12px;
+    padding: clamp(5px, 1.2vw, 8px) clamp(10px, 2.5vw, 16px);
   }
   
   .icon-wrapper {
@@ -382,11 +382,11 @@
   }
   
   .nav-item:not(.active) .icon-wrapper {
-    padding: 6px 0;
+    padding: clamp(5px, 1.2vw, 8px) 0;
   }
   
   .nav-label {
-    font-size: 11px;
+    font-size: clamp(10px, 2.2vw, 12px);
     font-weight: 500;
     transition: color 0.2s;
     white-space: nowrap;
@@ -404,74 +404,6 @@
     .chat-container {
       max-width: 480px;
       margin: 0 auto;
-      height: 100vh;
-    }
-    
-    .bot-avatar {
-      width: 60px;
-      height: 60px;
-    }
-    
-    .bot-name {
-      font-size: 20px;
-    }
-    
-    .bot-status {
-      font-size: 14px;
-    }
-    
-    .messages-container {
-      padding: 20px;
-    }
-    
-    .message-content {
-      padding: 16px 20px;
-    }
-    
-    .message-content p {
-      font-size: 15px;
-    }
-    
-    .message-time {
-      font-size: 12px;
-    }
-    
-    .reflect-section {
-      padding: 16px 20px;
-    }
-    
-    .reflect-button {
-      padding: 14px;
-      font-size: 16px;
-      gap: 10px;
-    }
-    
-    .input-section {
-      padding: 16px 20px;
-      gap: 12px;
-    }
-    
-    .input-container {
-      gap: 8px;
-      padding: 8px 20px;
-    }
-    
-    .input-container input {
-      font-size: 15px;
-    }
-    
-    .send-button {
-      width: 56px;
-      height: 56px;
-    }
-    
-    .nav-item {
-      padding: 8px 12px;
-      max-width: none;
-    }
-    
-    .nav-label {
-      font-size: 12px;
     }
   }
 </style>

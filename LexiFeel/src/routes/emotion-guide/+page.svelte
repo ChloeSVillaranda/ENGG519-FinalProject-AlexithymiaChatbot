@@ -100,16 +100,16 @@
   .chat-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
+    gap: clamp(10px, 2vw, 12px);
+    padding: clamp(14px, 3vw, 16px) clamp(16px, 4vw, 20px);
     background: white;
     border-bottom: 1px solid #f3f4f6;
     flex-shrink: 0;
   }
   
   .bot-avatar {
-    width: 50px;
-    height: 50px;
+    width: clamp(45px, 10vw, 60px);
+    height: clamp(45px, 10vw, 60px);
     border-radius: 50%;
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     display: flex;
@@ -125,14 +125,14 @@
   
   .bot-name {
     margin: 0;
-    font-size: 18px;
+    font-size: clamp(16px, 3.5vw, 20px);
     font-weight: 600;
     color: #1f2937;
   }
   
   .bot-status {
     margin: 2px 0 0 0;
-    font-size: 13px;
+    font-size: clamp(12px, 2.5vw, 14px);
     color: #a78bfa;
   }
   
@@ -140,27 +140,27 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 16px;
+    padding: clamp(14px, 3vw, 20px);
     background: #fefefe;
   }
   
   .guide-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: clamp(8px, 2vw, 10px);
+    margin-bottom: clamp(6px, 1.5vw, 8px);
   }
   
   .guide-header h2 {
     margin: 0;
-    font-size: 22px;
+    font-size: clamp(20px, 4.5vw, 24px);
     font-weight: 600;
     color: #1f2937;
   }
   
   .guide-subtitle {
-    margin: 0 0 16px 0;
-    font-size: 14px;
+    margin: 0 0 clamp(14px, 3vw, 20px) 0;
+    font-size: clamp(13px, 3vw, 16px);
     color: #a78bfa;
     text-align: center;
   }
@@ -168,7 +168,7 @@
   .emotions-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: clamp(10px, 2.5vw, 16px);
   }
   
   .emotion-card {
@@ -176,10 +176,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 24px 16px;
+    gap: clamp(8px, 2vw, 12px);
+    padding: clamp(20px, 5vw, 32px) clamp(14px, 3.5vw, 20px);
     border: none;
-    border-radius: 20px;
+    border-radius: clamp(16px, 4vw, 20px);
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -195,11 +195,11 @@
   }
   
   .emotion-emoji {
-    font-size: 48px;
+    font-size: clamp(42px, 10vw, 56px);
   }
   
   .emotion-name {
-    font-size: 16px;
+    font-size: clamp(15px, 3.5vw, 18px);
     font-weight: 600;
   }
   
@@ -208,7 +208,7 @@
     justify-content: space-around;
     background: white;
     border-top: 1px solid #f3f4f6;
-    padding: 10px 0 12px;
+    padding: clamp(8px, 2vw, 12px) 0;
     flex-shrink: 0;
   }
   
@@ -220,13 +220,13 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 6px 8px;
+    padding: clamp(5px, 1.5vw, 8px) clamp(6px, 1.5vw, 12px);
     transition: all 0.2s;
     border-radius: 12px;
     color: #9ca3af;
     min-width: 0;
     flex: 1;
-    max-width: 80px;
+    max-width: clamp(70px, 15vw, 90px);
   }
   
   .nav-item:hover {
@@ -273,59 +273,6 @@
     .chat-container {
       max-width: 480px;
       margin: 0 auto;
-      height: 100vh;
-    }
-    
-    .bot-avatar {
-      width: 60px;
-      height: 60px;
-    }
-    
-    .bot-name {
-      font-size: 20px;
-    }
-    
-    .bot-status {
-      font-size: 14px;
-    }
-    
-    .emotion-guide-container {
-      padding: 20px;
-    }
-    
-    .guide-header h2 {
-      font-size: 24px;
-    }
-    
-    .guide-subtitle {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    
-    .emotions-grid {
-      gap: 16px;
-    }
-    
-    .emotion-card {
-      padding: 32px 20px;
-      gap: 12px;
-    }
-    
-    .emotion-emoji {
-      font-size: 56px;
-    }
-    
-    .emotion-name {
-      font-size: 18px;
-    }
-    
-    .nav-item {
-      padding: 8px 12px;
-      max-width: none;
-    }
-    
-    .nav-label {
-      font-size: 12px;
     }
   }
 </style>
