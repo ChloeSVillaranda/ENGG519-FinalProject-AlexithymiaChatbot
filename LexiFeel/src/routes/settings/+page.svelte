@@ -6,9 +6,13 @@
   import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Icon from '@iconify/svelte';
-  
+  import { debugTrustOverride } from '$lib/stores/trustOverride';
+  import { goto } from '$app/navigation';
+
   let currentTab = 'settings';
-  
+  let selectedOverride: string | null = null;
+
+  // Existing settings fields (kept exactly as you had them)
   let userName = '';
   let pronouns = '';
   let selectedTone = 'empathetic';
@@ -19,14 +23,43 @@
   let textSize = 'medium';
   let readingMode = false;
   
-  function saveChanges() {
-    console.log('Saving settings:', { userName, pronouns, selectedTone, dailyCheckIns, weeklyInsights, darkMode, voiceMode, textSize, readingMode });
-    // Add save logic here
+  function navigateToTab(tab: string) {
+    currentTab = tab;
+    if (tab === 'chat') goto('/chat');
+    else if (tab === 'emotion-guide') goto('/emotion-guide');
+    else if (tab === 'journal') goto('/journal');
+    else if (tab === 'insights') goto('/insights');
+    else if (tab === 'settings') goto('/settings');
   }
+  
+  function saveChanges() {
+    console.log('Saving settings:', { 
+      userName, 
+      pronouns, 
+      selectedTone, 
+      dailyCheckIns, 
+      weeklyInsights, 
+      darkMode, 
+      voiceMode, 
+      textSize, 
+      readingMode 
+    });
+  }
+
+  /** Sync the override to the store anytime the dropdown changes */
+  $: debugTrustOverride.set(selectedOverride);
 </script>
 
-<PageContainer>
-  <BotHeader />
+<div class="chat-container">
+  <header class="chat-header">
+    <div class="bot-avatar">
+      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
+    </div>
+    <div class="bot-info">
+      <h2 class="bot-name">Feelio</h2>
+      <p class="bot-status">Always here to listen</p>
+    </div>
+  </header>
   
   <div class="settings-container" role="main">
     <div class="settings-header">
@@ -34,6 +67,26 @@
       <p class="settings-subtitle">Customize your Feelio experience</p>
     </div>
     
+    <!-- Trust Override (for testing) -->
+    <div class="settings-card">
+      <div class="card-header">
+        <Icon icon="mdi:tune" width="24" color="#7c3aed" />
+        <h3>Trust Band Override (Testing Only)</h3>
+      </div>
+
+      <select bind:value={selectedOverride} class="text-input" style="margin-top: 10px;">
+        <option value={null}>No override (normal behavior)</option>
+        <option value="A_VERY_LOW">A — Very Low</option>
+        <option value="B_CAUTIOUS">B — Cautious</option>
+        <option value="C_MODERATE">C — Moderate</option>
+        <option value="D_HIGH">D — High</option>
+      </select>
+
+      <p style="font-size: 12px; color: #999; margin-top: 8px;">
+        Forces the chatbot into a specific trust band for research testing.
+      </p>
+    </div>
+
     <!-- Profile Section -->
     <div class="settings-card">
       <div class="card-header">
@@ -178,57 +231,106 @@
   </div>
   
   <TabNavigation {currentTab} />
-</PageContainer>
+</div>
 
 <style>
-  .settings-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    background: #fefefe;
-  }
-  
-  .settings-header {
-    margin-bottom: 24px;
-  }
-  
-  .settings-title {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 600;
-    color: #6b21a8;
-  }
-  
-  .settings-subtitle {
-    margin: 4px 0 0 0;
-    font-size: 16px;
-    color: #a78bfa;
-  }
-  
-  .settings-card {
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 100%;
     background: white;
-    border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    overflow: hidden;
   }
   
-  .card-header {
+  .chat-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid #f3f4f6;
+    flex-shrink: 0;
   }
   
-  .card-header h3 {
+  .bot-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .bot-info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .bot-name {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
     color: #1f2937;
   }
   
-  .input-group {
+  .bot-status {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #a78bfa;
+  }
+  
+  .settings-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px;
+    background: #fefefe;
+  }
+  
+  .settings-header {
+    margin-bottom: 20px;
+  }
+  
+  .settings-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #6b21a8;
+  }
+  
+  .settings-subtitle {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #a78bfa;
+  }
+  
+  .settings-card {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 18px;
+    padding: 16px;
     margin-bottom: 16px;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .card-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .input-group {
+    margin-bottom: 14px;
   }
   
   .input-group:last-child {
@@ -237,18 +339,18 @@
   
   .input-label {
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #7c3aed;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   
   .text-input {
     width: 100%;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border: 1px solid #e9d5ff;
-    border-radius: 16px;
-    font-size: 15px;
+    border-radius: 14px;
+    font-size: 14px;
     font-family: inherit;
     outline: none;
     color: #1f2937;
@@ -267,7 +369,7 @@
   .tone-options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
   
   .tone-option {
@@ -284,10 +386,10 @@
   .tone-content {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px;
+    gap: 10px;
+    padding: 14px;
     border: 2px solid #f3f4f6;
-    border-radius: 16px;
+    border-radius: 14px;
     transition: all 0.2s;
   }
   
@@ -297,8 +399,8 @@
   }
   
   .tone-indicator {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     border: 2px solid #e9d5ff;
     background: white;
@@ -309,30 +411,31 @@
   .tone-option.selected .tone-indicator {
     border-color: #7c3aed;
     background: #7c3aed;
-    box-shadow: inset 0 0 0 4px white;
+    box-shadow: inset 0 0 0 3px white;
   }
   
   .tone-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
+    min-width: 0;
   }
   
   .tone-label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: #1f2937;
   }
   
   .tone-description {
-    font-size: 14px;
+    font-size: 13px;
     color: #a78bfa;
   }
   
   .toggle-group {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
   
   .setting-button {
@@ -340,12 +443,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 14px;
     background: white;
     border: 1px solid #e9d5ff;
-    border-radius: 16px;
+    border-radius: 14px;
     cursor: pointer;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     transition: all 0.2s;
   }
   
@@ -359,33 +462,193 @@
   }
   
   .button-label {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #7c3aed;
   }
   
   .privacy-note {
-    margin: 16px 0 0 0;
-    font-size: 13px;
+    margin: 12px 0 0 0;
+    font-size: 12px;
     line-height: 1.5;
     color: #a78bfa;
   }
   
   .save-button {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
     border: none;
     border-radius: 50px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   
   .save-button:hover {
     transform: translateY(-2px);
+  }
+  
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    border-top: 1px solid #f3f4f6;
+    padding: 10px 0 12px;
+    flex-shrink: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    transition: all 0.2s;
+    border-radius: 12px;
+    color: #9ca3af;
+    min-width: 0;
+    flex: 1;
+    max-width: 80px;
+  }
+  
+  .nav-item:hover {
+    background: #faf5ff;
+  }
+  
+  .nav-item.active {
+    color: #7c3aed;
+  }
+  
+  .nav-item.active .icon-wrapper {
+    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+    border-radius: 14px;
+    padding: 6px 12px;
+  }
+  
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-item:not(.active) .icon-wrapper {
+    padding: 6px 0;
+  }
+  
+  .nav-label {
+    font-size: 11px;
+    font-weight: 500;
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .nav-item.active .nav-label {
+    color: #7c3aed;
+    font-weight: 600;
+  }
+  
+  @media (min-width: 769px) {
+    .chat-container {
+      max-width: 480px;
+      margin: 0 auto;
+      height: 100vh;
+    }
+    
+    .bot-avatar {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .bot-name {
+      font-size: 20px;
+    }
+    
+    .bot-status {
+      font-size: 14px;
+    }
+    
+    .settings-container {
+      padding: 20px;
+    }
+    
+    .settings-title {
+      font-size: 28px;
+    }
+    
+    .settings-subtitle {
+      font-size: 16px;
+    }
+    
+    .settings-card {
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .card-header h3 {
+      font-size: 18px;
+    }
+    
+    .input-label {
+      font-size: 15px;
+    }
+    
+    .text-input {
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 16px;
+    }
+    
+    .tone-content {
+      padding: 16px;
+      border-radius: 16px;
+    }
+    
+    .tone-label {
+      font-size: 16px;
+    }
+    
+    .tone-description {
+      font-size: 14px;
+    }
+    
+    .setting-button {
+      padding: 16px;
+      border-radius: 16px;
+    }
+    
+    .button-label {
+      font-size: 15px;
+    }
+    
+    .privacy-note {
+      font-size: 13px;
+    }
+    
+    .save-button {
+      padding: 16px;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    
+    .nav-item {
+      padding: 8px 12px;
+      max-width: none;
+    }
+    
+    .nav-label {
+      font-size: 12px;
+    }
   }
 </style>
