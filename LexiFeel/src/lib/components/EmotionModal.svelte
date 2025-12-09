@@ -21,30 +21,34 @@
 
 {#if emotion}
   <div class="modal-backdrop" on:click={handleBackdropClick} role="dialog" aria-modal="true" aria-labelledby="emotion-title">
-    <div class="modal-content">
-      <button class="close-button" on:click={onClose} aria-label="Close modal">
-        <Icon icon="mdi:close" width={28} color="#6b7280" />
-      </button>
-      
-      <div class="modal-header" style="background: {emotion.color};">
-        <span class="modal-emoji">{emotion.emoji}</span>
-        <h2 id="emotion-title" class="modal-title" style="color: {emotion.textColor};">{emotion.name}</h2>
-      </div>
-      
-      <div class="modal-body">
-        <section>
-          <h3 class="section-title">What is this emotion?</h3>
-          <p class="section-text">{emotion.description}</p>
-        </section>
+    <div class="modal-wrapper">
+      <div class="modal-content">
+        <button class="close-button" on:click={onClose} aria-label="Close modal">
+          <Icon icon="mdi:close" width={28} color="#6b7280" />
+        </button>
         
-        <section>
-          <h3 class="section-title">How it feels in your body:</h3>
-          <ul class="sensations-list">
-            {#each emotion.bodySensations as sensation}
-              <li class="sensation-item">{sensation}</li>
-            {/each}
-          </ul>
-        </section>
+        <div class="modal-scroll">
+          <div class="modal-header" style="background: {emotion.color};">
+            <span class="modal-emoji">{emotion.emoji}</span>
+            <h2 id="emotion-title" class="modal-title" style="color: {emotion.textColor};">{emotion.name}</h2>
+          </div>
+          
+          <div class="modal-body">
+            <section>
+              <h3 class="section-title">What is this emotion?</h3>
+              <p class="section-text">{emotion.description}</p>
+            </section>
+            
+            <section>
+              <h3 class="section-title">How it feels in your body:</h3>
+              <ul class="sensations-list">
+                {#each emotion.bodySensations as sensation}
+                  <li class="sensation-item">{sensation}</li>
+                {/each}
+              </ul>
+            </section>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -75,15 +79,10 @@
     }
   }
   
-  .modal-content {
-    background: white;
-    border-radius: clamp(20px, 4vw, 28px);
+  .modal-wrapper {
     max-width: 600px;
     width: 100%;
     max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.3s ease-out;
   }
   
@@ -96,6 +95,16 @@
       transform: translateY(0);
       opacity: 1;
     }
+  }
+  
+  .modal-content {
+    position: relative;
+    background: white;
+    border-radius: clamp(20px, 4vw, 28px);
+    width: 100%;
+    max-height: 90vh;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
   }
   
   .close-button {
@@ -119,6 +128,37 @@
   .close-button:hover {
     background: #f3f4f6;
     transform: scale(1.05);
+  }
+  
+  .modal-scroll {
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  /* Custom scrollbar styling */
+  .modal-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .modal-scroll::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 0 clamp(20px, 4vw, 28px) clamp(20px, 4vw, 28px) 0;
+  }
+  
+  .modal-scroll::-webkit-scrollbar-thumb {
+    background: #c4b5fd;
+    border-radius: 10px;
+  }
+  
+  .modal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #a78bfa;
+  }
+  
+  /* Firefox scrollbar */
+  .modal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #c4b5fd #f3f4f6;
   }
   
   .modal-header {
@@ -201,8 +241,20 @@
       padding: 0;
     }
     
+    .modal-wrapper {
+      max-height: 100vh;
+    }
+    
     .modal-content {
       max-height: 100vh;
+      border-radius: 0;
+    }
+    
+    .modal-scroll {
+      max-height: 100vh;
+    }
+    
+    .modal-scroll::-webkit-scrollbar-track {
       border-radius: 0;
     }
     
