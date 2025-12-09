@@ -1,39 +1,57 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
-
-  let messages = [
-    {
-      id: 1,
-      type: 'bot',
-      text: "Hi there! I'm here to help you explore and understand your emotions. Let's start with what you notice in your body. How do you physically feel right now?",
-      time: '07:20 PM'
-    }
-  ];
+  import type { Message, TrustState } from '$lib/types';
   
   let inputText = '';
   let currentTab = 'chat';
-  
-  function sendMessage() {
-    if (inputText.trim()) {
-      messages = [...messages, {
-        id: messages.length + 1,
-        type: 'user',
-        text: inputText,
-        time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-      }];
-      inputText = '';
-      
-      setTimeout(() => {
-        messages = [...messages, {
-          id: messages.length + 1,
-          type: 'bot',
-          text: "Thank you for sharing. That's a good start in recognizing what's happening in your body. Can you tell me more about what emotions you might be feeling?",
-          time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-        }];
-      }, 1000);
+  let trustState: TrustState | null = null;
+  let messages: Message[] = [
+    {
+      id: crypto.randomUUID(),
+      role: "assistant",
+      text: "Hi there! I'm here to help you explore and understand what you notice. What physical sensations are showing up right now?",
+      time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
     }
+  ];
+
+
+  async function sendMessage() {
+    if (!inputText.trim()) return;
+
+    // Add user's message
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      text: inputText,
+      time: new Date().toLocaleTimeString('en-US', { hour: "numeric", minute: "2-digit" })
+    };
+
+    messages = [...messages, userMessage];
+    inputText = '';
+
+    // Call backend
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, trustState })
+    });
+
+    if (!res.ok) {
+      console.error("Backend error");
+      return;
+    }
+
+    const data = await res.json();
+
+    const botMessage: Message = data.message;
+    trustState = data.trustState;
+
+    // Add bot message
+    messages = [...messages, botMessage];
   }
+
+  
   
   function handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -53,6 +71,21 @@
 
 <div class="chat-container">
   <header class="chat-header">
+{#if trustState}
+  <div class="trust-debug">
+    <strong>Trust Band:</strong> {trustState.band}<br>
+    <strong>Trust Factor:</strong> {trustState.trustFactor.toFixed(3)}<br>
+
+    <details>
+      <summary>Metrics</summary>
+      <div class="metric-line">Avg Length: {trustState.metrics.avgMessageLength.toFixed(1)}</div>
+      <div class="metric-line">Self-disclosure: {trustState.metrics.selfDisclosure.toFixed(2)}</div>
+      <div class="metric-line">Repair success: {trustState.metrics.repairSuccess.toFixed(2)}</div>
+      <div class="metric-line">Sessions: {trustState.metrics.sessionCount}</div>
+    </details>
+  </div>
+{/if}
+
     <div class="bot-avatar">
       <Icon icon="mdi:heart" width="32" color="#7c3aed" />
     </div>
@@ -64,7 +97,7 @@
   
   <div class="messages-container">
     {#each messages as message}
-      <div class="message {message.type}">
+      <div class="message {message.role}">
         <div class="message-content">
           <p>{message.text}</p>
           <span class="message-time">{message.time}</span>
@@ -152,6 +185,32 @@
     border-bottom: 1px solid #f3f4f6;
   }
   
+.trust-debug {
+  background: #f3e8ff;
+  color: #5b21b6;
+  border-left: 4px solid #a78bfa;
+  padding: 12px 16px;
+  margin: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.trust-debug summary {
+  cursor: pointer;
+  margin-top: 6px;
+  font-weight: 600;
+  color: #7c3aed;
+}
+
+.metric-line {
+  padding-left: 10px;
+  font-size: 13px;
+  margin-top: 4px;
+  color: #4c1d95; /* deeper purple */
+}
+
+
   .bot-avatar {
     width: 60px;
     height: 60px;
@@ -192,7 +251,7 @@
     margin-bottom: 16px;
   }
   
-  .message.bot {
+  .message.assistant {
     justify-content: flex-start;
   }
   
@@ -206,7 +265,7 @@
     border-radius: 24px;
   }
   
-  .message.bot .message-content {
+  .message.assistant .message-content {
     background: #f3e8ff;
     color: #5b21b6;
     border-bottom-left-radius: 6px;
