@@ -30,60 +30,60 @@
 
 <style>
   .input-section {
-    padding: var(--spacing-4) var(--spacing-5);
+    padding: 16px 20px;
     background: white;
     display: flex;
     align-items: center;
-    gap: var(--spacing-3);
+    gap: 12px;
   }
   
   .input-container {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: var(--spacing-2);
+    gap: 8px;
     background: white;
-    border: 2px solid var(--color-primary-200);
+    border: 2px solid #e9d5ff;
     border-radius: var(--radius-full);
-    padding: var(--spacing-2) var(--spacing-5);
+    padding: 8px 20px;
   }
   
   .input-container input {
     flex: 1;
     border: none;
     background: transparent;
-    font-size: var(--font-size-base);
-    padding: var(--spacing-2);
+    font-size: 15px;
+    padding: 8px;
     outline: none;
-    color: var(--color-neutral-800);
+    color: #1f2937;
   }
   
   .input-container input::placeholder {
-    color: var(--color-neutral-400);
+    color: #9ca3af;
   }
   
   .icon-button {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: var(--spacing-1);
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary-500);
+    color: #a78bfa;
     transition: all var(--transition-base);
   }
   
   .icon-button:hover {
-    color: var(--color-primary-700);
+    color: #7c3aed;
     transform: scale(1.1);
   }
   
   .send-button {
-    width: var(--spacing-14);
-    height: var(--spacing-14);
+    width: 56px;
+    height: 56px;
     border-radius: var(--radius-circle);
-    background: var(--gradient-primary);
+    background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 100%);
     border: none;
     cursor: pointer;
     display: flex;
@@ -95,6 +95,7 @@
   
   .send-button:hover {
     transform: scale(1.05);
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
   }
   
   .send-button:active {

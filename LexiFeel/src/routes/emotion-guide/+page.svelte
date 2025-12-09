@@ -49,40 +49,40 @@
   .emotion-guide-container {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-6) var(--spacing-5);
-    background: var(--color-neutral-50);
+    padding: 24px 20px;
+    background: #fefefe;
   }
   
   .guide-header {
     display: flex;
     align-items: center;
-    gap: var(--spacing-3);
-    margin-bottom: var(--spacing-2);
+    gap: 12px;
+    margin-bottom: 8px;
   }
   
   .guide-header h2 {
     margin: 0;
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-800);
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
   }
   
   .guide-subtitle {
-    margin: 0 0 var(--spacing-6) 0;
-    font-size: var(--font-size-md);
-    color: var(--color-primary-500);
+    margin: 0 0 24px 0;
+    font-size: 16px;
+    color: #a78bfa;
     text-align: center;
   }
   
   .emotions-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-4);
+    gap: 16px;
   }
   
   @media (min-width: 769px) {
     .emotions-grid {
-      gap: var(--spacing-5);
+      gap: 20px;
     }
   }
 </style>

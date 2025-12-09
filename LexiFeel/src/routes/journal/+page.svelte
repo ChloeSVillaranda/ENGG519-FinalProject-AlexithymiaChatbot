@@ -104,15 +104,15 @@
   .journal-container {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-5);
-    background: var(--color-neutral-50);
+    padding: 20px;
+    background: #fefefe;
   }
   
   .journal-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--spacing-6);
+    margin-bottom: 24px;
   }
   
   .header-left {
@@ -121,26 +121,26 @@
   
   .journal-title {
     margin: 0;
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-800);
+    font-size: 24px;
+    font-weight: 600;
+    color: #6b21a8;
   }
   
   .journal-date {
-    margin: var(--spacing-1) 0 0 0;
-    font-size: var(--font-size-md);
-    color: var(--color-primary-500);
+    margin: 4px 0 0 0;
+    font-size: 16px;
+    color: #a78bfa;
   }
   
   .download-button {
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: var(--spacing-2);
+    padding: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform var(--transition-base);
+    transition: transform 0.2s;
   }
   
   .download-button:hover {
@@ -150,20 +150,20 @@
   .card-header {
     display: flex;
     align-items: center;
-    gap: var(--spacing-2);
-    margin-bottom: var(--spacing-4);
+    gap: 10px;
+    margin-bottom: 16px;
   }
   
   .card-header h3 {
     margin: 0;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-800);
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
   }
   
   .mood-dots {
     display: flex;
-    gap: var(--spacing-4);
+    gap: 16px;
     justify-content: center;
   }
   
@@ -171,14 +171,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-2);
+    gap: 8px;
   }
   
   .mood-dot {
-    width: var(--spacing-16);
-    height: var(--spacing-16);
-    border-radius: var(--radius-md);
-    transition: transform var(--transition-base);
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    transition: transform 0.2s;
     cursor: pointer;
   }
   
@@ -187,30 +187,30 @@
   }
   
   .mood-day {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-primary-500);
+    font-size: 14px;
+    font-weight: 500;
+    color: #a78bfa;
   }
   
   .card-title {
-    margin: 0 0 var(--spacing-4) 0;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-800);
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #6b21a8;
   }
   
   .reflection-textarea {
     width: 100%;
     min-height: 140px;
-    padding: var(--spacing-4);
-    border: 1px solid var(--color-primary-200);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-base);
+    padding: 16px;
+    border: 1px solid #e9d5ff;
+    border-radius: 16px;
+    font-size: 15px;
     font-family: inherit;
     resize: vertical;
     outline: none;
-    color: var(--color-neutral-800);
-    background: var(--color-neutral-50);
+    color: #1f2937;
+    background: #fefefe;
     box-sizing: border-box;
   }
   
@@ -219,18 +219,18 @@
   }
   
   .reflection-textarea::placeholder {
-    color: var(--color-primary-400);
+    color: #c4b5fd;
   }
   
   .reflection-textarea:focus {
-    border-color: var(--color-primary-500);
+    border-color: #a78bfa;
   }
   
   .quote {
     text-align: center;
-    font-size: var(--font-size-sm);
+    font-size: 14px;
     font-style: italic;
-    color: var(--color-primary-400);
-    margin: var(--spacing-4) 0;
+    color: #c4b5fd;
+    margin: 16px 0;
   }
 </style>

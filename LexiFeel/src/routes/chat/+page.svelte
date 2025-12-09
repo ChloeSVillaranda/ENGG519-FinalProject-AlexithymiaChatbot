@@ -84,12 +84,12 @@
   .messages-container {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-5);
-    background: var(--color-neutral-50);
+    padding: 20px;
+    background: #fefefe;
   }
   
   .reflect-section {
-    padding: var(--spacing-4) var(--spacing-5);
+    padding: 16px 20px;
     background: white;
   }
 </style>

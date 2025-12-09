@@ -22,18 +22,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-3);
-    padding: var(--spacing-8) var(--spacing-5);
+    gap: 12px;
+    padding: 32px 20px;
     border: none;
-    border-radius: var(--radius-xl);
+    border-radius: 24px;
     cursor: pointer;
-    transition: all var(--transition-base);
-    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
   
   .emotion-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
   }
   
   .emotion-card:active {
@@ -41,11 +41,11 @@
   }
   
   .emotion-emoji {
-    font-size: var(--spacing-14);
+    font-size: 56px;
   }
   
   .emotion-name {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
+    font-size: 18px;
+    font-weight: 600;
   }
 </style>

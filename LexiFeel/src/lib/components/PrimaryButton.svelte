@@ -24,16 +24,16 @@
 
 <style>
   .btn {
-    padding: var(--spacing-3) var(--spacing-5);
+    padding: 14px;
     border-radius: var(--radius-full);
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-semibold);
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-base);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-2);
+    gap: 10px;
     border: none;
   }
   
@@ -54,13 +54,13 @@
   
   .btn-secondary {
     background: white;
-    color: var(--color-primary-700);
-    border: 2px solid var(--color-primary-200);
+    color: #7c3aed;
+    border: 2px solid #e9d5ff;
   }
   
   .btn-secondary:hover:not(:disabled) {
-    background: var(--color-primary-50);
-    border-color: var(--color-primary-400);
+    background: #faf5ff;
+    border-color: #c4b5fd;
   }
   
   .btn-outline {
