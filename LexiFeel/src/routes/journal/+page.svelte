@@ -26,10 +26,18 @@
   }
 </script>
 
-<PageContainer>
-  <BotHeader />
+<div class="chat-container">
+  <header class="chat-header">
+    <div class="bot-avatar">
+      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
+    </div>
+    <div class="bot-info">
+      <h2 class="bot-name">Feelio</h2>
+      <p class="bot-status">Always here to listen</p>
+    </div>
+  </header>
   
-  <div class="journal-container" role="main">
+  <div class="journal-container">
     <div class="journal-header">
       <div class="header-left">
         <h2 class="journal-title">Daily Reflection</h2>
@@ -98,13 +106,62 @@
   </div>
   
   <TabNavigation {currentTab} />
-</PageContainer>
+</div>
 
 <style>
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 100%;
+    background: white;
+    overflow: hidden;
+  }
+  
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: white;
+    border-bottom: 1px solid #f3f4f6;
+    flex-shrink: 0;
+  }
+  
+  .bot-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .bot-info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .bot-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .bot-status {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #a78bfa;
+  }
+  
   .journal-container {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
+    overflow-x: hidden;
+    padding: 16px;
     background: #fefefe;
   }
   
@@ -112,23 +169,24 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   
   .header-left {
     flex: 1;
+    min-width: 0;
   }
   
   .journal-title {
     margin: 0;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     color: #6b21a8;
   }
   
   .journal-date {
     margin: 4px 0 0 0;
-    font-size: 16px;
+    font-size: 14px;
     color: #a78bfa;
   }
   
@@ -136,34 +194,43 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+    flex-shrink: 0;
   }
   
   .download-button:hover {
     transform: scale(1.1);
   }
   
+  .mood-tracker-card {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
   .card-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 14px;
   }
   
   .card-header h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: #1f2937;
   }
   
   .mood-dots {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     justify-content: center;
   }
   
@@ -171,15 +238,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
   
   .mood-dot {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     transition: transform 0.2s;
-    cursor: pointer;
   }
   
   .mood-dot:hover {
@@ -187,25 +253,33 @@
   }
   
   .mood-day {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #a78bfa;
   }
   
+  .reflection-card {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
   .card-title {
-    margin: 0 0 16px 0;
-    font-size: 18px;
+    margin: 0 0 12px 0;
+    font-size: 16px;
     font-weight: 600;
     color: #6b21a8;
   }
   
   .reflection-textarea {
     width: 100%;
-    min-height: 140px;
-    padding: 16px;
+    min-height: 100px;
+    padding: 14px;
     border: 1px solid #e9d5ff;
-    border-radius: 16px;
-    font-size: 15px;
+    border-radius: 14px;
+    font-size: 14px;
     font-family: inherit;
     resize: vertical;
     outline: none;
@@ -215,7 +289,7 @@
   }
   
   .reflection-textarea.small {
-    min-height: 100px;
+    min-height: 80px;
   }
   
   .reflection-textarea::placeholder {
@@ -226,11 +300,202 @@
     border-color: #a78bfa;
   }
   
+  .ai-suggestions-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #a78bfa;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  
+  .ai-suggestions-button:hover {
+    color: #7c3aed;
+  }
+  
+  .save-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 12px;
+  }
+  
+  .save-button:hover {
+    transform: translateY(-2px);
+  }
+  
   .quote {
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     font-style: italic;
     color: #c4b5fd;
-    margin: 16px 0;
+    margin: 0 0 16px 0;
+  }
+  
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    border-top: 1px solid #f3f4f6;
+    padding: 10px 0 12px;
+    flex-shrink: 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    transition: all 0.2s;
+    border-radius: 12px;
+    color: #9ca3af;
+    min-width: 0;
+    flex: 1;
+    max-width: 80px;
+  }
+  
+  .nav-item:hover {
+    background: #faf5ff;
+  }
+  
+  .nav-item.active {
+    color: #7c3aed;
+  }
+  
+  .nav-item.active .icon-wrapper {
+    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
+    border-radius: 14px;
+    padding: 6px 12px;
+  }
+  
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-item:not(.active) .icon-wrapper {
+    padding: 6px 0;
+  }
+  
+  .nav-label {
+    font-size: 11px;
+    font-weight: 500;
+    transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .nav-item.active .nav-label {
+    color: #7c3aed;
+    font-weight: 600;
+  }
+  
+  @media (min-width: 769px) {
+    .chat-container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    
+    .bot-avatar {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .bot-name {
+      font-size: 20px;
+    }
+    
+    .bot-status {
+      font-size: 14px;
+    }
+    
+    .journal-container {
+      padding: 20px;
+    }
+    
+    .journal-title {
+      font-size: 24px;
+    }
+    
+    .journal-date {
+      font-size: 16px;
+    }
+    
+    .mood-tracker-card,
+    .reflection-card {
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .card-header h3 {
+      font-size: 18px;
+    }
+    
+    .mood-dot {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+    }
+    
+    .mood-day {
+      font-size: 14px;
+    }
+    
+    .card-title {
+      font-size: 18px;
+    }
+    
+    .reflection-textarea {
+      min-height: 140px;
+      padding: 16px;
+      font-size: 15px;
+      border-radius: 16px;
+    }
+    
+    .reflection-textarea.small {
+      min-height: 100px;
+    }
+    
+    .save-button {
+      padding: 16px;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    
+    .quote {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .nav-item {
+      padding: 8px 12px;
+      max-width: none;
+    }
+    
+    .nav-label {
+      font-size: 12px;
+    }
   }
 </style>
