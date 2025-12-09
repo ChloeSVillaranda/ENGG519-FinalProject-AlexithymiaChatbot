@@ -24,7 +24,7 @@
   
   <div class="emotion-guide-container" role="main">
     <div class="guide-header">
-      <Icon icon="mdi:book-open-variant" width="32" color="var(--color-primary-700)" />
+      <Icon icon="mdi:book-open-variant" width="32" color="#7c3aed" />
       <h2>Emotion Guide</h2>
     </div>
     <p class="guide-subtitle">Tap any emotion to learn how it feels in your body</p>

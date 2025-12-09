@@ -87,7 +87,7 @@
     <!-- Notifications Section -->
     <div class="settings-card">
       <div class="card-header">
-        <Icon icon="mdi:bell-outline" width="24" color="var(--color-primary-700)" />
+        <Icon icon="mdi:bell-outline" width="24" color="#7c3aed" />
         <h3>Notifications</h3>
       </div>
       
@@ -111,7 +111,7 @@
     <!-- Appearance Section -->
     <div class="settings-card">
       <div class="card-header">
-        <Icon icon="mdi:moon-waning-crescent" width="24" color="var(--color-primary-700)" />
+        <Icon icon="mdi:moon-waning-crescent" width="24" color="#7c3aed" />
         <h3>Appearance</h3>
       </div>
       

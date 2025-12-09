@@ -36,13 +36,13 @@
         <p class="journal-date">Friday, October 24, 2025</p>
       </div>
       <button class="download-button" aria-label="Download journal">
-        <Icon icon="mdi:download" width="24" color="var(--color-primary-500)" />
+        <Icon icon="mdi:download" width="24" color="#a78bfa" />
       </button>
     </div>
     
     <SectionCard>
       <div class="card-header">
-        <Icon icon="mdi:calendar-blank" width="24" color="var(--color-primary-700)" />
+        <Icon icon="mdi:calendar-blank" width="24" color="#7c3aed" />
         <h3>This Week's Moods</h3>
       </div>
       <div class="mood-dots">

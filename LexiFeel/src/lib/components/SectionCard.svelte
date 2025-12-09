@@ -12,10 +12,10 @@
 <style>
   .section-card {
     background: white;
-    border: 1px solid var(--color-neutral-200);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-5);
-    margin-bottom: var(--spacing-5);
+    border: 1px solid #f3f4f6;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
   }
   
   .section-card.no-border {
