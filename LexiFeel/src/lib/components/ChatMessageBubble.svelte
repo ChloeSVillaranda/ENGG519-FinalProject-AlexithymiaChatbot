@@ -14,7 +14,7 @@
 <style>
   .message {
     display: flex;
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 16px;
   }
   
   .message.bot {
@@ -26,31 +26,31 @@
   }
   
   .message-content {
-    max-width: var(--bubble-max-width);
-    padding: var(--spacing-4) var(--spacing-5);
-    border-radius: var(--radius-xl);
+    max-width: 80%;
+    padding: 16px 20px;
+    border-radius: 24px;
   }
   
   .message.bot .message-content {
-    background: var(--bubble-bot-bg);
-    color: var(--bubble-bot-text);
-    border-bottom-left-radius: var(--radius-sm);
+    background: #f3e8ff;
+    color: #5b21b6;
+    border-bottom-left-radius: 6px;
   }
   
   .message.user .message-content {
-    background: var(--bubble-user-bg);
-    color: var(--bubble-user-text);
-    border-bottom-right-radius: var(--radius-sm);
+    background: #8b5cf6;
+    color: white;
+    border-bottom-right-radius: 6px;
   }
   
   .message-content p {
-    margin: 0 0 var(--spacing-2) 0;
-    line-height: var(--line-height-relaxed);
-    font-size: var(--font-size-base);
+    margin: 0 0 8px 0;
+    line-height: 1.6;
+    font-size: 15px;
   }
   
   .message-time {
-    font-size: var(--font-size-xs);
+    font-size: 12px;
     opacity: 0.7;
   }
 </style>
