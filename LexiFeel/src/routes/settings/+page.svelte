@@ -184,51 +184,51 @@
   .settings-container {
     flex: 1;
     overflow-y: auto;
-    padding: var(--spacing-5);
-    background: var(--color-neutral-50);
+    padding: 20px;
+    background: #fefefe;
   }
   
   .settings-header {
-    margin-bottom: var(--spacing-6);
+    margin-bottom: 24px;
   }
   
   .settings-title {
     margin: 0;
-    font-size: var(--font-size-3xl);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-800);
+    font-size: 28px;
+    font-weight: 600;
+    color: #6b21a8;
   }
   
   .settings-subtitle {
-    margin: var(--spacing-1) 0 0 0;
-    font-size: var(--font-size-md);
-    color: var(--color-primary-500);
+    margin: 4px 0 0 0;
+    font-size: 16px;
+    color: #a78bfa;
   }
   
   .settings-card {
     background: white;
-    border: 1px solid var(--color-neutral-200);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-5);
-    margin-bottom: var(--spacing-5);
+    border: 1px solid #f3f4f6;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
   }
   
   .card-header {
     display: flex;
     align-items: center;
-    gap: var(--spacing-2);
-    margin-bottom: var(--spacing-5);
+    gap: 10px;
+    margin-bottom: 20px;
   }
   
   .card-header h3 {
     margin: 0;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-800);
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
   }
   
   .input-group {
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 16px;
   }
   
   .input-group:last-child {
@@ -237,37 +237,37 @@
   
   .input-label {
     display: block;
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-700);
-    margin-bottom: var(--spacing-2);
+    font-size: 15px;
+    font-weight: 600;
+    color: #7c3aed;
+    margin-bottom: 8px;
   }
   
   .text-input {
     width: 100%;
-    padding: var(--spacing-3) var(--spacing-4);
-    border: 1px solid var(--color-primary-200);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-base);
+    padding: 14px 16px;
+    border: 1px solid #e9d5ff;
+    border-radius: 16px;
+    font-size: 15px;
     font-family: inherit;
     outline: none;
-    color: var(--color-neutral-800);
-    background: var(--color-neutral-50);
+    color: #1f2937;
+    background: #fefefe;
     box-sizing: border-box;
   }
   
   .text-input::placeholder {
-    color: var(--color-primary-400);
+    color: #c4b5fd;
   }
   
   .text-input:focus {
-    border-color: var(--color-primary-500);
+    border-color: #a78bfa;
   }
   
   .tone-options {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-3);
+    gap: 12px;
   }
   
   .tone-option {
@@ -284,55 +284,55 @@
   .tone-content {
     display: flex;
     align-items: center;
-    gap: var(--spacing-3);
-    padding: var(--spacing-4);
-    border: 2px solid var(--color-neutral-200);
-    border-radius: var(--radius-md);
-    transition: all var(--transition-base);
+    gap: 12px;
+    padding: 16px;
+    border: 2px solid #f3f4f6;
+    border-radius: 16px;
+    transition: all 0.2s;
   }
   
   .tone-option.selected .tone-content {
-    border-color: var(--color-primary-500);
-    background: var(--color-primary-50);
+    border-color: #a78bfa;
+    background: #faf5ff;
   }
   
   .tone-indicator {
     width: 20px;
     height: 20px;
-    border-radius: var(--radius-circle);
-    border: 2px solid var(--color-primary-200);
+    border-radius: 50%;
+    border: 2px solid #e9d5ff;
     background: white;
-    transition: all var(--transition-base);
+    transition: all 0.2s;
     flex-shrink: 0;
   }
   
   .tone-option.selected .tone-indicator {
-    border-color: var(--color-primary-700);
-    background: var(--color-primary-700);
+    border-color: #7c3aed;
+    background: #7c3aed;
     box-shadow: inset 0 0 0 4px white;
   }
   
   .tone-text {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-1);
+    gap: 4px;
   }
   
   .tone-label {
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-800);
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
   }
   
   .tone-description {
-    font-size: var(--font-size-sm);
-    color: var(--color-primary-500);
+    font-size: 14px;
+    color: #a78bfa;
   }
   
   .toggle-group {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-4);
+    gap: 16px;
   }
   
   .setting-button {
@@ -340,13 +340,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-4);
+    padding: 16px;
     background: white;
-    border: 1px solid var(--color-primary-200);
-    border-radius: var(--radius-md);
+    border: 1px solid #e9d5ff;
+    border-radius: 16px;
     cursor: pointer;
-    margin-bottom: var(--spacing-3);
-    transition: all var(--transition-base);
+    margin-bottom: 12px;
+    transition: all 0.2s;
   }
   
   .setting-button:last-of-type {
@@ -354,35 +354,35 @@
   }
   
   .setting-button:hover {
-    background: var(--color-primary-50);
-    border-color: var(--color-primary-400);
+    background: #faf5ff;
+    border-color: #c4b5fd;
   }
   
   .button-label {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary-700);
+    font-size: 15px;
+    font-weight: 600;
+    color: #7c3aed;
   }
   
   .privacy-note {
-    margin: var(--spacing-4) 0 0 0;
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-normal);
-    color: var(--color-primary-500);
+    margin: 16px 0 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #a78bfa;
   }
   
   .save-button {
     width: 100%;
-    padding: var(--spacing-4);
-    background: var(--gradient-primary);
+    padding: 16px;
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
     border: none;
-    border-radius: var(--radius-full);
+    border-radius: 50px;
     color: white;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
+    font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
-    transition: transform var(--transition-base);
-    margin-bottom: var(--spacing-5);
+    transition: transform 0.2s;
+    margin-bottom: 20px;
   }
   
   .save-button:hover {
