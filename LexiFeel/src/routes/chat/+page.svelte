@@ -71,6 +71,21 @@
 
 <div class="chat-container">
   <header class="chat-header">
+{#if trustState}
+  <div class="trust-debug">
+    <strong>Trust Band:</strong> {trustState.band}<br>
+    <strong>Trust Factor:</strong> {trustState.trustFactor.toFixed(3)}<br>
+
+    <details>
+      <summary>Metrics</summary>
+      <div class="metric-line">Avg Length: {trustState.metrics.avgMessageLength.toFixed(1)}</div>
+      <div class="metric-line">Self-disclosure: {trustState.metrics.selfDisclosure.toFixed(2)}</div>
+      <div class="metric-line">Repair success: {trustState.metrics.repairSuccess.toFixed(2)}</div>
+      <div class="metric-line">Sessions: {trustState.metrics.sessionCount}</div>
+    </details>
+  </div>
+{/if}
+
     <div class="bot-avatar">
       <Icon icon="mdi:heart" width="32" color="#7c3aed" />
     </div>
@@ -170,6 +185,32 @@
     border-bottom: 1px solid #f3f4f6;
   }
   
+.trust-debug {
+  background: #f3e8ff;
+  color: #5b21b6;
+  border-left: 4px solid #a78bfa;
+  padding: 12px 16px;
+  margin: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.trust-debug summary {
+  cursor: pointer;
+  margin-top: 6px;
+  font-weight: 600;
+  color: #7c3aed;
+}
+
+.metric-line {
+  padding-left: 10px;
+  font-size: 13px;
+  margin-top: 4px;
+  color: #4c1d95; /* deeper purple */
+}
+
+
   .bot-avatar {
     width: 60px;
     height: 60px;
