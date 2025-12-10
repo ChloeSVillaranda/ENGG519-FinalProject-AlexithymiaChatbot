@@ -4,6 +4,7 @@
   import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   import Icon from '@iconify/svelte';
   import { debugTrustOverride } from '$lib/stores/trustOverride';
+  import { darkMode as darkModeStore } from '$lib/stores/theme';
 
   let currentTab = 'settings';
   let selectedOverride: string | null = null;
@@ -18,6 +19,14 @@
   let voiceMode = false;
   let textSize = 'medium';
   let readingMode = false;
+  
+  // Subscribe to dark mode store
+  $: darkMode = $darkModeStore;
+  
+  // Update when toggle changes
+  $: if (darkMode !== $darkModeStore) {
+    darkModeStore.set(darkMode);
+  }
   
   function saveChanges() {
     console.log('Saving settings:', { 
@@ -143,7 +152,7 @@
     <!-- Appearance Section -->
     <div class="settings-card">
       <div class="card-header">
-        <Icon icon="mdi:moon-waning-crescent" width="24" color="#7c3aed" />
+        <Icon icon="mdi:palette-outline" width="24" color="#7c3aed" />
         <h3>Appearance</h3>
       </div>
       
