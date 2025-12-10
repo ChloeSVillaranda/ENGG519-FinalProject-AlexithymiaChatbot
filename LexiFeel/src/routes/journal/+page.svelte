@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import PageContainer from '$lib/components/PageContainer.svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
+  import TabNavigation from '$lib/components/TabNavigation.svelte';
+  import SectionCard from '$lib/components/SectionCard.svelte';
+  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Icon from '@iconify/svelte';
   
   let currentTab = 'journal';
@@ -15,15 +19,6 @@
   let todayEvents = '';
   let bodyFelt = '';
   let notableMoments = '';
-  
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'chat') goto('/chat');
-    else if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
-  }
   
   function saveReflection() {
     console.log('Saving reflection:', { todayEvents, bodyFelt, notableMoments });
@@ -48,12 +43,12 @@
         <h2 class="journal-title">Daily Reflection</h2>
         <p class="journal-date">Friday, October 24, 2025</p>
       </div>
-      <button class="download-button">
+      <button class="download-button" aria-label="Download journal">
         <Icon icon="mdi:download" width="24" color="#a78bfa" />
       </button>
     </div>
     
-    <div class="mood-tracker-card">
+    <SectionCard>
       <div class="card-header">
         <Icon icon="mdi:calendar-blank" width="24" color="#7c3aed" />
         <h3>This Week's Moods</h3>
@@ -66,80 +61,51 @@
           </div>
         {/each}
       </div>
-    </div>
+    </SectionCard>
     
-    <div class="reflection-card">
+    <SectionCard>
       <h3 class="card-title">What happened today...</h3>
       <textarea
         class="reflection-textarea"
         placeholder="Describe events, interactions, or situations from your day..."
         bind:value={todayEvents}
+        aria-label="What happened today"
       ></textarea>
-      <button class="ai-suggestions-button">
-        <Icon icon="mdi:creation" width="20" />
+      <PrimaryButton variant="outline" icon="mdi:creation" onClick={() => console.log('AI suggestions')}>
         AI suggestions
-      </button>
-    </div>
+      </PrimaryButton>
+    </SectionCard>
     
-    <div class="reflection-card">
+    <SectionCard>
       <h3 class="card-title">How my body felt...</h3>
       <textarea
         class="reflection-textarea small"
         placeholder="Describe physical sensations (tight chest, heavy limbs, racing heart, tense shoulders, etc.)..."
         bind:value={bodyFelt}
+        aria-label="How my body felt"
       ></textarea>
-    </div>
+    </SectionCard>
     
-    <div class="reflection-card">
+    <SectionCard>
       <h3 class="card-title">Notable Moments ☀️</h3>
       <textarea
         class="reflection-textarea small"
         placeholder="What stood out to you today? Any interactions or moments you keep thinking about..."
         bind:value={notableMoments}
+        aria-label="Notable moments"
       ></textarea>
-    </div>
+    </SectionCard>
     
-    <button class="save-button" on:click={saveReflection}>
+    <PrimaryButton fullWidth={true} onClick={saveReflection}>
       Save Reflection
-    </button>
+    </PrimaryButton>
     
     <p class="quote">
       "Every experience and sensation is a clue to understanding your emotional world."
     </p>
   </div>
   
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => navigateToTab('chat')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
+  <TabNavigation {currentTab} />
 </div>
 
 <style>
@@ -149,6 +115,7 @@
     height: 100vh;
     max-width: 100%;
     background: white;
+    overflow: hidden;
   }
   
   .chat-header {
@@ -158,11 +125,12 @@
     padding: 16px 20px;
     background: white;
     border-bottom: 1px solid #f3f4f6;
+    flex-shrink: 0;
   }
   
   .bot-avatar {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     display: flex;
@@ -173,25 +141,27 @@
   
   .bot-info {
     flex: 1;
+    min-width: 0;
   }
   
   .bot-name {
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #1f2937;
   }
   
   .bot-status {
     margin: 2px 0 0 0;
-    font-size: 14px;
+    font-size: 13px;
     color: #a78bfa;
   }
   
   .journal-container {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
+    overflow-x: hidden;
+    padding: 16px;
     background: #fefefe;
   }
   
@@ -199,23 +169,24 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   
   .header-left {
     flex: 1;
+    min-width: 0;
   }
   
   .journal-title {
     margin: 0;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     color: #6b21a8;
   }
   
   .journal-date {
     margin: 4px 0 0 0;
-    font-size: 16px;
+    font-size: 14px;
     color: #a78bfa;
   }
   
@@ -223,11 +194,12 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+    flex-shrink: 0;
   }
   
   .download-button:hover {
@@ -237,28 +209,28 @@
   .mood-tracker-card {
     background: white;
     border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
   }
   
   .card-header {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 14px;
   }
   
   .card-header h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color: #1f2937;
   }
   
   .mood-dots {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     justify-content: center;
   }
   
@@ -266,13 +238,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
   
   .mood-dot {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     transition: transform 0.2s;
   }
   
@@ -281,7 +253,7 @@
   }
   
   .mood-day {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #a78bfa;
   }
@@ -289,25 +261,25 @@
   .reflection-card {
     background: white;
     border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
   }
   
   .card-title {
-    margin: 0 0 16px 0;
-    font-size: 18px;
+    margin: 0 0 12px 0;
+    font-size: 16px;
     font-weight: 600;
     color: #6b21a8;
   }
   
   .reflection-textarea {
     width: 100%;
-    min-height: 140px;
-    padding: 16px;
+    min-height: 100px;
+    padding: 14px;
     border: 1px solid #e9d5ff;
-    border-radius: 16px;
-    font-size: 15px;
+    border-radius: 14px;
+    font-size: 14px;
     font-family: inherit;
     resize: vertical;
     outline: none;
@@ -317,7 +289,7 @@
   }
   
   .reflection-textarea.small {
-    min-height: 100px;
+    min-height: 80px;
   }
   
   .reflection-textarea::placeholder {
@@ -329,17 +301,17 @@
   }
   
   .ai-suggestions-button {
-    margin-top: 12px;
-    padding: 10px 20px;
+    margin-top: 10px;
+    padding: 8px 16px;
     background: transparent;
     border: none;
     color: #a78bfa;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: color 0.2s;
   }
   
@@ -349,16 +321,16 @@
   
   .save-button {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
     border: none;
     border-radius: 50px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   
   .save-button:hover {
@@ -367,10 +339,10 @@
   
   .quote {
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     font-style: italic;
     color: #c4b5fd;
-    margin: 0 0 20px 0;
+    margin: 0 0 16px 0;
   }
   
   .bottom-nav {
@@ -378,7 +350,8 @@
     justify-content: space-around;
     background: white;
     border-top: 1px solid #f3f4f6;
-    padding: 12px 0 16px;
+    padding: 10px 0 12px;
+    flex-shrink: 0;
   }
   
   .nav-item {
@@ -389,10 +362,13 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 8px 12px;
+    padding: 6px 8px;
     transition: all 0.2s;
     border-radius: 12px;
     color: #9ca3af;
+    min-width: 0;
+    flex: 1;
+    max-width: 80px;
   }
   
   .nav-item:hover {
@@ -405,8 +381,8 @@
   
   .nav-item.active .icon-wrapper {
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 16px;
-    padding: 8px 16px;
+    border-radius: 14px;
+    padding: 6px 12px;
   }
   
   .icon-wrapper {
@@ -417,13 +393,17 @@
   }
   
   .nav-item:not(.active) .icon-wrapper {
-    padding: 8px 0;
+    padding: 6px 0;
   }
   
   .nav-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
   
   .nav-item.active .nav-label {
@@ -435,7 +415,87 @@
     .chat-container {
       max-width: 480px;
       margin: 0 auto;
-      height: 100vh;
+    }
+    
+    .bot-avatar {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .bot-name {
+      font-size: 20px;
+    }
+    
+    .bot-status {
+      font-size: 14px;
+    }
+    
+    .journal-container {
+      padding: 20px;
+    }
+    
+    .journal-title {
+      font-size: 24px;
+    }
+    
+    .journal-date {
+      font-size: 16px;
+    }
+    
+    .mood-tracker-card,
+    .reflection-card {
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .card-header h3 {
+      font-size: 18px;
+    }
+    
+    .mood-dot {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+    }
+    
+    .mood-day {
+      font-size: 14px;
+    }
+    
+    .card-title {
+      font-size: 18px;
+    }
+    
+    .reflection-textarea {
+      min-height: 140px;
+      padding: 16px;
+      font-size: 15px;
+      border-radius: 16px;
+    }
+    
+    .reflection-textarea.small {
+      min-height: 100px;
+    }
+    
+    .save-button {
+      padding: 16px;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    
+    .quote {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .nav-item {
+      padding: 8px 12px;
+      max-width: none;
+    }
+    
+    .nav-label {
+      font-size: 12px;
     }
   }
 </style>

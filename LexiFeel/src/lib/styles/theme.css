@@ -1,0 +1,239 @@
+/**
+ * Feelio Design System - Theme Tokens
+ * Centralized design variables for consistent styling across the application
+ */
+
+:root {
+  /* === Color Palette === */
+  
+  /* Primary Purple Colors */
+  --color-primary-50: #faf5ff;
+  --color-primary-100: #f3e8ff;
+  --color-primary-200: #e9d5ff;
+  --color-primary-300: #ddd6fe;
+  --color-primary-400: #c4b5fd;
+  --color-primary-500: #a78bfa;
+  --color-primary-600: #8b5cf6;
+  --color-primary-700: #7c3aed;
+  --color-primary-800: #6b21a8;
+  --color-primary-900: #5b21b6;
+  
+  /* Neutral Colors */
+  --color-neutral-50: #fefefe;
+  --color-neutral-100: #f9fafb;
+  --color-neutral-200: #f3f4f6;
+  --color-neutral-300: #e5e7eb;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+  
+  /* Semantic Colors */
+  --color-success: #bbf7d0;
+  --color-success-text: #14532d;
+  --color-warning: #fef08a;
+  --color-warning-text: #854d0e;
+  --color-info: #bfdbfe;
+  --color-info-text: #1e3a8a;
+  --color-error: #fecaca;
+  --color-error-text: #991b1b;
+  
+  /* === Typography === */
+  
+  /* Font Families */
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'Fira Mono', monospace;
+  
+  /* Font Sizes */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 15px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  
+  /* === Spacing === */
+  
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-14: 56px;
+  --spacing-16: 64px;
+  
+  /* === Border Radius === */
+  
+  --radius-sm: 6px;
+  --radius-base: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 50px;
+  --radius-circle: 50%;
+  
+  /* === Shadows === */
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.15);
+  
+  /* === Transitions === */
+  
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  
+  /* === Gradients === */
+  
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
+  --gradient-primary-light: linear-gradient(135deg, var(--color-primary-200) 0%, var(--color-primary-300) 100%);
+  --gradient-primary-subtle: linear-gradient(135deg, var(--color-primary-100) 0%, var(--color-primary-200) 100%);
+  --gradient-background: linear-gradient(135deg, #f5f0ff 0%, #fff 100%);
+  
+  /* === Component-Specific Variables === */
+  
+  /* Avatar */
+  --avatar-size-sm: 48px;
+  --avatar-size-base: 60px;
+  --avatar-size-lg: 80px;
+  
+  /* Chat Bubbles */
+  --bubble-bot-bg: var(--color-primary-100);
+  --bubble-bot-text: var(--color-primary-900);
+  --bubble-user-bg: var(--color-primary-600);
+  --bubble-user-text: white;
+  --bubble-max-width: 80%;
+  
+  /* Navigation */
+  --nav-height: 72px;
+  --nav-item-gap: 4px;
+  
+  /* Container */
+  --container-max-width: 480px;
+  --container-padding: var(--spacing-5);
+}
+
+/* === Utility Classes === */
+
+/* Flexbox utilities */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-1 { gap: var(--spacing-1); }
+.gap-2 { gap: var(--spacing-2); }
+.gap-3 { gap: var(--spacing-3); }
+.gap-4 { gap: var(--spacing-4); }
+.gap-5 { gap: var(--spacing-5); }
+
+/* Spacing utilities */
+.p-4 { padding: var(--spacing-4); }
+.p-5 { padding: var(--spacing-5); }
+.p-6 { padding: var(--spacing-6); }
+
+.mb-4 { margin-bottom: var(--spacing-4); }
+.mb-5 { margin-bottom: var(--spacing-5); }
+.mb-6 { margin-bottom: var(--spacing-6); }
+
+/* Text utilities */
+.text-primary { color: var(--color-primary-700); }
+.text-primary-light { color: var(--color-primary-500); }
+.text-neutral { color: var(--color-neutral-800); }
+.text-muted { color: var(--color-neutral-400); }
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-slow);
+}
+
+.slide-up {
+  animation: slideUp var(--transition-slow);
+}
+
+/* Accessibility utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 2px;
+}

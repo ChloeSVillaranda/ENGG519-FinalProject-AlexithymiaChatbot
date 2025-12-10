@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import PageContainer from '$lib/components/PageContainer.svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
+  import TabNavigation from '$lib/components/TabNavigation.svelte';
+  import SectionCard from '$lib/components/SectionCard.svelte';
   import Icon from '@iconify/svelte';
   
   let currentTab = 'insights';
@@ -20,184 +23,139 @@
     { day: 'Sat', value: 10 },
     { day: 'Sun', value: 8 }
   ];
-  
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'chat') goto('/chat');
-    else if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
-  }
 </script>
 
 <div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
-  
-  <div class="insights-container">
-    <div class="insights-header">
-      <h2 class="insights-title">Your Insights</h2>
-      <p class="insights-subtitle">Emotional growth over time</p>
-    </div>
+  <PageContainer>
+    <BotHeader />
     
-    <!-- Progress Message -->
-    <div class="progress-card">
-      <div class="progress-icon">
-        <Icon icon="mdi:heart-circle" width="48" color="#7c3aed" />
+    <div class="insights-container" role="main">
+      <div class="insights-header">
+        <h2 class="insights-title">Your Insights</h2>
+        <p class="insights-subtitle">Emotional growth over time</p>
       </div>
-      <div class="progress-content">
-        <h3 class="progress-title">Great progress!</h3>
-        <p class="progress-text">You've been more open lately. I've noticed you're expressing emotions more clearly and identifying triggers faster. Keep up the amazing work! 🌟</p>
+      
+      <!-- Progress Message -->
+      <div class="progress-card">
+        <div class="progress-icon">
+          <Icon icon="mdi:heart-circle" width="48" color="#7c3aed" />
+        </div>
+        <div class="progress-content">
+          <h3 class="progress-title">Great progress!</h3>
+          <p class="progress-text">You've been more open lately. I've noticed you're expressing emotions more clearly and identifying triggers faster. Keep up the amazing work! 🌟</p>
+        </div>
       </div>
-    </div>
-    
-    <!-- Most Common Emotions -->
-    <div class="emotions-card">
-      <div class="card-title-row">
-        <Icon icon="mdi:heart-outline" width="24" color="#7c3aed" />
-        <h3 class="card-title">Most Common Emotions</h3>
-      </div>
-      <div class="emotions-list">
-        {#each commonEmotions as emotion}
-          <div class="emotion-row">
-            <div class="emotion-info">
-              <span class="emotion-emoji">{emotion.emoji}</span>
-              <span class="emotion-label">{emotion.name}</span>
+      
+      <!-- Most Common Emotions -->
+      <SectionCard>
+        <div class="card-title-row">
+          <Icon icon="mdi:heart-outline" width="24" color="#7c3aed" />
+          <h3 class="card-title">Most Common Emotions</h3>
+        </div>
+        <div class="emotions-list">
+          {#each commonEmotions as emotion}
+            <div class="emotion-row">
+              <div class="emotion-info">
+                <span class="emotion-emoji">{emotion.emoji}</span>
+                <span class="emotion-label">{emotion.name}</span>
+              </div>
+              <div class="emotion-bar-container">
+                <div class="emotion-bar" style="width: {emotion.width}; background: {emotion.color};"></div>
+              </div>
+              <span class="emotion-count">{emotion.count}</span>
             </div>
-            <div class="emotion-bar-container">
-              <div class="emotion-bar" style="width: {emotion.width}; background: {emotion.color};"></div>
+          {/each}
+        </div>
+      </SectionCard>
+      
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <Icon icon="mdi:calendar-blank" width="40" color="#a78bfa" />
+          <div class="stat-number">28</div>
+          <div class="stat-label">Days Tracking</div>
+        </div>
+        <div class="stat-card">
+          <Icon icon="mdi:star-outline" width="40" color="#a78bfa" />
+          <div class="stat-number">156</div>
+          <div class="stat-label">Emotions Logged</div>
+        </div>
+      </div>
+      
+      <!-- Mood Trend -->
+      <SectionCard>
+        <div class="card-title-row">
+          <Icon icon="mdi:chart-line" width="24" color="#7c3aed" />
+          <h3 class="card-title">Mood Trend (Last 7 Days)</h3>
+        </div>
+        <div class="chart-container">
+          <div class="chart-y-axis">
+            <span class="y-label">10</span>
+            <span class="y-label">6</span>
+            <span class="y-label">3</span>
+            <span class="y-label">0</span>
+          </div>
+          <div class="chart-content">
+            <svg class="mood-chart" viewBox="0 0 280 120" preserveAspectRatio="none" aria-label="Mood trend chart">
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:0.3" />
+                  <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.05" />
+                </linearGradient>
+              </defs>
+              <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
+                    fill="url(#gradient)" stroke="none"/>
+              <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
+                    fill="none" stroke="#8b5cf6" stroke-width="3"/>
+            </svg>
+            <div class="chart-x-axis">
+              {#each moodData as data}
+                <span class="x-label">{data.day}</span>
+              {/each}
             </div>
-            <span class="emotion-count">{emotion.count}</span>
           </div>
-        {/each}
-      </div>
+        </div>
+      </SectionCard>
+      
+      <!-- Emotional Growth Progress -->
+      <SectionCard>
+        <h3 class="card-title">Emotional Growth Progress</h3>
+        <div class="progress-bars">
+          <div class="progress-item">
+            <div class="progress-label-row">
+              <span class="progress-label">Emotion Awareness</span>
+              <span class="progress-percentage">85%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label-row">
+              <span class="progress-label">Emotional Vocabulary</span>
+              <span class="progress-percentage">72%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width: 72%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+            </div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label-row">
+              <span class="progress-label">Trigger Recognition</span>
+              <span class="progress-percentage">68%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+            </div>
+          </div>
+        </div>
+      </SectionCard>
     </div>
     
-    <!-- Stats Cards -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <Icon icon="mdi:calendar-blank" width="40" color="#a78bfa" />
-        <div class="stat-number">28</div>
-        <div class="stat-label">Days Tracking</div>
-      </div>
-      <div class="stat-card">
-        <Icon icon="mdi:star-outline" width="40" color="#a78bfa" />
-        <div class="stat-number">156</div>
-        <div class="stat-label">Emotions Logged</div>
-      </div>
-    </div>
-    
-    <!-- Mood Trend -->
-    <div class="mood-trend-card">
-      <div class="card-title-row">
-        <Icon icon="mdi:chart-line" width="24" color="#7c3aed" />
-        <h3 class="card-title">Mood Trend (Last 7 Days)</h3>
-      </div>
-      <div class="chart-container">
-        <div class="chart-y-axis">
-          <span class="y-label">10</span>
-          <span class="y-label">6</span>
-          <span class="y-label">3</span>
-          <span class="y-label">0</span>
-        </div>
-        <div class="chart-content">
-          <svg class="mood-chart" viewBox="0 0 280 120" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:0.3" />
-                <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.05" />
-              </linearGradient>
-            </defs>
-            <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
-                  fill="url(#gradient)" stroke="none"/>
-            <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
-                  fill="none" stroke="#8b5cf6" stroke-width="3"/>
-          </svg>
-          <div class="chart-x-axis">
-            {#each moodData as data}
-              <span class="x-label">{data.day}</span>
-            {/each}
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Emotional Growth Progress -->
-    <div class="growth-card">
-      <h3 class="card-title">Emotional Growth Progress</h3>
-      <div class="progress-bars">
-        <div class="progress-item">
-          <div class="progress-label-row">
-            <span class="progress-label">Emotion Awareness</span>
-            <span class="progress-percentage">85%</span>
-          </div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
-          </div>
-        </div>
-        <div class="progress-item">
-          <div class="progress-label-row">
-            <span class="progress-label">Emotional Vocabulary</span>
-            <span class="progress-percentage">72%</span>
-          </div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: 72%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
-          </div>
-        </div>
-        <div class="progress-item">
-          <div class="progress-label-row">
-            <span class="progress-label">Trigger Recognition</span>
-            <span class="progress-percentage">68%</span>
-          </div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => navigateToTab('chat')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
+    <TabNavigation {currentTab} />
+  </PageContainer>
 </div>
+
 
 <style>
   .chat-container {
@@ -206,6 +164,7 @@
     height: 100vh;
     max-width: 100%;
     background: white;
+    overflow: hidden;
   }
   
   .chat-header {
@@ -215,11 +174,12 @@
     padding: 16px 20px;
     background: white;
     border-bottom: 1px solid #f3f4f6;
+    flex-shrink: 0;
   }
   
   .bot-avatar {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     display: flex;
@@ -230,25 +190,27 @@
   
   .bot-info {
     flex: 1;
+    min-width: 0;
   }
   
   .bot-name {
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #1f2937;
   }
   
   .bot-status {
     margin: 2px 0 0 0;
-    font-size: 14px;
+    font-size: 13px;
     color: #a78bfa;
   }
   
   .insights-container {
     flex: 1;
     overflow-y: auto;
-    padding: 20px;
+    overflow-x: hidden;
+    padding: 16px;
     background: #fefefe;
   }
   
@@ -299,14 +261,6 @@
     font-size: 15px;
     line-height: 1.6;
     color: #6b21a8;
-  }
-  
-  .emotions-card, .mood-trend-card, .growth-card {
-    background: white;
-    border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
   }
   
   .card-title-row {
@@ -485,69 +439,10 @@
     transition: width 0.3s ease;
   }
   
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #f3f4f6;
-    padding: 12px 0 16px;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px 12px;
-    transition: all 0.2s;
-    border-radius: 12px;
-    color: #9ca3af;
-  }
-  
-  .nav-item:hover {
-    background: #faf5ff;
-  }
-  
-  .nav-item.active {
-    color: #7c3aed;
-  }
-  
-  .nav-item.active .icon-wrapper {
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 16px;
-    padding: 8px 16px;
-  }
-  
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item:not(.active) .icon-wrapper {
-    padding: 8px 0;
-  }
-  
-  .nav-label {
-    font-size: 12px;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  
-  .nav-item.active .nav-label {
-    color: #7c3aed;
-    font-weight: 600;
-  }
-  
   @media (min-width: 769px) {
     .chat-container {
       max-width: 480px;
       margin: 0 auto;
-      height: 100vh;
     }
   }
 </style>

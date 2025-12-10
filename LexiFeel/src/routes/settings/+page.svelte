@@ -1,7 +1,13 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import PageContainer from '$lib/components/PageContainer.svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
+  import TabNavigation from '$lib/components/TabNavigation.svelte';
+  import SectionCard from '$lib/components/SectionCard.svelte';
+  import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
+  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Icon from '@iconify/svelte';
   import { debugTrustOverride } from '$lib/stores/trustOverride';
+  import { goto } from '$app/navigation';
 
   let currentTab = 'settings';
   let selectedOverride: string | null = null;
@@ -16,8 +22,7 @@
   let voiceMode = false;
   let textSize = 'medium';
   let readingMode = false;
-
-  /** Navigation handler */
+  
   function navigateToTab(tab: string) {
     currentTab = tab;
     if (tab === 'chat') goto('/chat');
@@ -26,8 +31,7 @@
     else if (tab === 'insights') goto('/insights');
     else if (tab === 'settings') goto('/settings');
   }
-
-  /** Save button handler */
+  
   function saveChanges() {
     console.log('Saving settings:', { 
       userName, 
@@ -46,7 +50,6 @@
   $: debugTrustOverride.set(selectedOverride);
 </script>
 
-
 <div class="chat-container">
   <header class="chat-header">
     <div class="bot-avatar">
@@ -58,7 +61,7 @@
     </div>
   </header>
   
-  <div class="settings-container">
+  <div class="settings-container" role="main">
     <div class="settings-header">
       <h2 class="settings-title">Settings</h2>
       <p class="settings-subtitle">Customize your Feelio experience</p>
@@ -92,13 +95,13 @@
       </div>
       
       <div class="input-group">
-        <label class="input-label">Name</label>
-        <input type="text" class="text-input" placeholder="Your name" bind:value={userName} />
+        <label class="input-label" for="user-name">Name</label>
+        <input type="text" id="user-name" class="text-input" placeholder="Your name" bind:value={userName} />
       </div>
       
       <div class="input-group">
-        <label class="input-label">Pronouns</label>
-        <input type="text" class="text-input" placeholder="e.g., they/them, she/her, he/him" bind:value={pronouns} />
+        <label class="input-label" for="user-pronouns">Pronouns</label>
+        <input type="text" id="user-pronouns" class="text-input" placeholder="e.g., they/them, she/her, he/him" bind:value={pronouns} />
       </div>
     </div>
     
@@ -142,27 +145,19 @@
       </div>
       
       <div class="toggle-group">
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Daily Check-ins</span>
-            <span class="toggle-description">Remind me to reflect daily</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={dailyCheckIns} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Daily Check-ins"
+          description="Remind me to reflect daily"
+          bind:checked={dailyCheckIns}
+          id="daily-checkins"
+        />
         
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Weekly Insights</span>
-            <span class="toggle-description">Summary of my emotional progress</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={weeklyInsights} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Weekly Insights"
+          description="Summary of my emotional progress"
+          bind:checked={weeklyInsights}
+          id="weekly-insights"
+        />
       </div>
     </div>
     
@@ -174,27 +169,19 @@
       </div>
       
       <div class="toggle-group">
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Dark Mode</span>
-            <span class="toggle-description">Deep purple theme for night</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={darkMode} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Dark Mode"
+          description="Deep purple theme for night"
+          bind:checked={darkMode}
+          id="dark-mode"
+        />
         
-        <div class="toggle-item">
-          <div class="toggle-info">
-            <span class="toggle-label">Voice Mode</span>
-            <span class="toggle-description">Feelio responds with voice</span>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" bind:checked={voiceMode} />
-            <span class="slider"></span>
-          </label>
-        </div>
+        <ToggleSwitch 
+          label="Voice Mode"
+          description="Feelio responds with voice"
+          bind:checked={voiceMode}
+          id="voice-mode"
+        />
       </div>
     </div>
     
@@ -243,38 +230,7 @@
     </button>
   </div>
   
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => navigateToTab('chat')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
+  <TabNavigation {currentTab} />
 </div>
 
 <style>
@@ -284,6 +240,7 @@
     height: 100vh;
     max-width: 100%;
     background: white;
+    overflow: hidden;
   }
   
   .chat-header {
@@ -293,11 +250,12 @@
     padding: 16px 20px;
     background: white;
     border-bottom: 1px solid #f3f4f6;
+    flex-shrink: 0;
   }
   
   .bot-avatar {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
     display: flex;
@@ -308,69 +266,71 @@
   
   .bot-info {
     flex: 1;
+    min-width: 0;
   }
   
   .bot-name {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .bot-status {
-    margin: 2px 0 0 0;
-    font-size: 14px;
-    color: #a78bfa;
-  }
-  
-  .settings-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    background: #fefefe;
-  }
-  
-  .settings-header {
-    margin-bottom: 24px;
-  }
-  
-  .settings-title {
-    margin: 0;
-    font-size: 28px;
-    font-weight: 600;
-    color: #6b21a8;
-  }
-  
-  .settings-subtitle {
-    margin: 4px 0 0 0;
-    font-size: 16px;
-    color: #a78bfa;
-  }
-  
-  .settings-card {
-    background: white;
-    border: 1px solid #f3f4f6;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .card-header h3 {
     margin: 0;
     font-size: 18px;
     font-weight: 600;
     color: #1f2937;
   }
   
-  .input-group {
+  .bot-status {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #a78bfa;
+  }
+  
+  .settings-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px;
+    background: #fefefe;
+  }
+  
+  .settings-header {
+    margin-bottom: 20px;
+  }
+  
+  .settings-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #6b21a8;
+  }
+  
+  .settings-subtitle {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #a78bfa;
+  }
+  
+  .settings-card {
+    background: white;
+    border: 1px solid #f3f4f6;
+    border-radius: 18px;
+    padding: 16px;
     margin-bottom: 16px;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .card-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .input-group {
+    margin-bottom: 14px;
   }
   
   .input-group:last-child {
@@ -379,18 +339,18 @@
   
   .input-label {
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #7c3aed;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   
   .text-input {
     width: 100%;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border: 1px solid #e9d5ff;
-    border-radius: 16px;
-    font-size: 15px;
+    border-radius: 14px;
+    font-size: 14px;
     font-family: inherit;
     outline: none;
     color: #1f2937;
@@ -409,7 +369,7 @@
   .tone-options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
   
   .tone-option {
@@ -426,10 +386,10 @@
   .tone-content {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px;
+    gap: 10px;
+    padding: 14px;
     border: 2px solid #f3f4f6;
-    border-radius: 16px;
+    border-radius: 14px;
     transition: all 0.2s;
   }
   
@@ -439,8 +399,8 @@
   }
   
   .tone-indicator {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     border: 2px solid #e9d5ff;
     background: white;
@@ -451,101 +411,31 @@
   .tone-option.selected .tone-indicator {
     border-color: #7c3aed;
     background: #7c3aed;
-    box-shadow: inset 0 0 0 4px white;
+    box-shadow: inset 0 0 0 3px white;
   }
   
   .tone-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
+    min-width: 0;
   }
   
   .tone-label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: #1f2937;
   }
   
   .tone-description {
-    font-size: 14px;
+    font-size: 13px;
     color: #a78bfa;
   }
   
   .toggle-group {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-  }
-  
-  .toggle-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .toggle-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex: 1;
-  }
-  
-  .toggle-label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .toggle-description {
-    font-size: 14px;
-    color: #a78bfa;
-  }
-  
-  .toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 52px;
-    height: 28px;
-    flex-shrink: 0;
-  }
-  
-  .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #e5e7eb;
-    transition: 0.3s;
-    border-radius: 28px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.3s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(24px);
+    gap: 14px;
   }
   
   .setting-button {
@@ -553,12 +443,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 14px;
     background: white;
     border: 1px solid #e9d5ff;
-    border-radius: 16px;
+    border-radius: 14px;
     cursor: pointer;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     transition: all 0.2s;
   }
   
@@ -572,30 +462,30 @@
   }
   
   .button-label {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #7c3aed;
   }
   
   .privacy-note {
-    margin: 16px 0 0 0;
-    font-size: 13px;
+    margin: 12px 0 0 0;
+    font-size: 12px;
     line-height: 1.5;
     color: #a78bfa;
   }
   
   .save-button {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
     border: none;
     border-radius: 50px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   
   .save-button:hover {
@@ -607,7 +497,8 @@
     justify-content: space-around;
     background: white;
     border-top: 1px solid #f3f4f6;
-    padding: 12px 0 16px;
+    padding: 10px 0 12px;
+    flex-shrink: 0;
   }
   
   .nav-item {
@@ -618,10 +509,13 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 8px 12px;
+    padding: 6px 8px;
     transition: all 0.2s;
     border-radius: 12px;
     color: #9ca3af;
+    min-width: 0;
+    flex: 1;
+    max-width: 80px;
   }
   
   .nav-item:hover {
@@ -634,8 +528,8 @@
   
   .nav-item.active .icon-wrapper {
     background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 16px;
-    padding: 8px 16px;
+    border-radius: 14px;
+    padding: 6px 12px;
   }
   
   .icon-wrapper {
@@ -646,13 +540,17 @@
   }
   
   .nav-item:not(.active) .icon-wrapper {
-    padding: 8px 0;
+    padding: 6px 0;
   }
   
   .nav-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     transition: color 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
   
   .nav-item.active .nav-label {
@@ -665,6 +563,92 @@
       max-width: 480px;
       margin: 0 auto;
       height: 100vh;
+    }
+    
+    .bot-avatar {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .bot-name {
+      font-size: 20px;
+    }
+    
+    .bot-status {
+      font-size: 14px;
+    }
+    
+    .settings-container {
+      padding: 20px;
+    }
+    
+    .settings-title {
+      font-size: 28px;
+    }
+    
+    .settings-subtitle {
+      font-size: 16px;
+    }
+    
+    .settings-card {
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .card-header h3 {
+      font-size: 18px;
+    }
+    
+    .input-label {
+      font-size: 15px;
+    }
+    
+    .text-input {
+      padding: 14px 16px;
+      font-size: 15px;
+      border-radius: 16px;
+    }
+    
+    .tone-content {
+      padding: 16px;
+      border-radius: 16px;
+    }
+    
+    .tone-label {
+      font-size: 16px;
+    }
+    
+    .tone-description {
+      font-size: 14px;
+    }
+    
+    .setting-button {
+      padding: 16px;
+      border-radius: 16px;
+    }
+    
+    .button-label {
+      font-size: 15px;
+    }
+    
+    .privacy-note {
+      font-size: 13px;
+    }
+    
+    .save-button {
+      padding: 16px;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    
+    .nav-item {
+      padding: 8px 12px;
+      max-width: none;
+    }
+    
+    .nav-label {
+      font-size: 12px;
     }
   }
 </style>
