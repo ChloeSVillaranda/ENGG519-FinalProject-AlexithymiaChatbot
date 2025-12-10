@@ -111,45 +111,6 @@
     margin: 0 auto;
   }
   
-  .chat-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    background: white;
-    border-bottom: 1px solid #f3f4f6;
-    flex-shrink: 0;
-  }
-  
-  .bot-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .bot-info {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .bot-name {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .bot-status {
-    margin: 2px 0 0 0;
-    font-size: 13px;
-    color: #a78bfa;
-  }
-  
   .journal-container {
     flex: 1;
     overflow-y: auto;
@@ -288,19 +249,6 @@
   @media (min-width: 769px) {
     .chat-container {
       max-width: 600px;
-    }
-    
-    .bot-avatar {
-      width: 60px;
-      height: 60px;
-    }
-    
-    .bot-name {
-      font-size: 20px;
-    }
-    
-    .bot-status {
-      font-size: 14px;
     }
     
     .journal-container {

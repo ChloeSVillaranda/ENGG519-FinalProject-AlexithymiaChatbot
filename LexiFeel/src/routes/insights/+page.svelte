@@ -1,7 +1,5 @@
 <script lang="ts">
-  import PageContainer from '$lib/components/PageContainer.svelte';
   import BotHeader from '$lib/components/BotHeader.svelte';
-  import TabNavigation from '$lib/components/TabNavigation.svelte';
   import SectionCard from '$lib/components/SectionCard.svelte';
   import Icon from '@iconify/svelte';
   import BottomNavigation from '$lib/components/BottomNavigation.svelte';
@@ -27,134 +25,132 @@
 </script>
 
 <div class="chat-container">
-  <PageContainer>
-    <BotHeader />
-    
-    <div class="insights-container" role="main">
-      <div class="insights-header">
-        <h2 class="insights-title">Your Insights</h2>
-        <p class="insights-subtitle">Emotional growth over time</p>
-      </div>
-      
-      <!-- Progress Message -->
-      <div class="progress-card">
-        <div class="progress-icon">
-          <Icon icon="mdi:heart-circle" width="48" color="#7c3aed" />
-        </div>
-        <div class="progress-content">
-          <h3 class="progress-title">Great progress!</h3>
-          <p class="progress-text">You've been more open lately. I've noticed you're expressing emotions more clearly and identifying triggers faster. Keep up the amazing work! 🌟</p>
-        </div>
-      </div>
-      
-      <!-- Most Common Emotions -->
-      <SectionCard>
-        <div class="card-title-row">
-          <Icon icon="mdi:heart-outline" width="24" color="#7c3aed" />
-          <h3 class="card-title">Most Common Emotions</h3>
-        </div>
-        <div class="emotions-list">
-          {#each commonEmotions as emotion}
-            <div class="emotion-row">
-              <div class="emotion-info">
-                <span class="emotion-emoji">{emotion.emoji}</span>
-                <span class="emotion-label">{emotion.name}</span>
-              </div>
-              <div class="emotion-bar-container">
-                <div class="emotion-bar" style="width: {emotion.width}; background: {emotion.color};"></div>
-              </div>
-              <span class="emotion-count">{emotion.count}</span>
-            </div>
-          {/each}
-        </div>
-      </SectionCard>
-      
-      <!-- Stats Cards -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <Icon icon="mdi:calendar-blank" width="40" color="#a78bfa" />
-          <div class="stat-number">28</div>
-          <div class="stat-label">Days Tracking</div>
-        </div>
-        <div class="stat-card">
-          <Icon icon="mdi:star-outline" width="40" color="#a78bfa" />
-          <div class="stat-number">156</div>
-          <div class="stat-label">Emotions Logged</div>
-        </div>
-      </div>
-      
-      <!-- Mood Trend -->
-      <SectionCard>
-        <div class="card-title-row">
-          <Icon icon="mdi:chart-line" width="24" color="#7c3aed" />
-          <h3 class="card-title">Mood Trend (Last 7 Days)</h3>
-        </div>
-        <div class="chart-container">
-          <div class="chart-y-axis">
-            <span class="y-label">10</span>
-            <span class="y-label">6</span>
-            <span class="y-label">3</span>
-            <span class="y-label">0</span>
-          </div>
-          <div class="chart-content">
-            <svg class="mood-chart" viewBox="0 0 280 120" preserveAspectRatio="none" aria-label="Mood trend chart">
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:0.3" />
-                  <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.05" />
-                </linearGradient>
-              </defs>
-              <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
-                    fill="url(#gradient)" stroke="none"/>
-              <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
-                    fill="none" stroke="#8b5cf6" stroke-width="3"/>
-            </svg>
-            <div class="chart-x-axis">
-              {#each moodData as data}
-                <span class="x-label">{data.day}</span>
-              {/each}
-            </div>
-          </div>
-        </div>
-      </SectionCard>
-      
-      <!-- Emotional Growth Progress -->
-      <SectionCard>
-        <h3 class="card-title">Emotional Growth Progress</h3>
-        <div class="progress-bars">
-          <div class="progress-item">
-            <div class="progress-label-row">
-              <span class="progress-label">Emotion Awareness</span>
-              <span class="progress-percentage">85%</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
-            </div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label-row">
-              <span class="progress-label">Emotional Vocabulary</span>
-              <span class="progress-percentage">72%</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-fill" style="width: 72%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
-            </div>
-          </div>
-          <div class="progress-item">
-            <div class="progress-label-row">
-              <span class="progress-label">Trigger Recognition</span>
-              <span class="progress-percentage">68%</span>
-            </div>
-            <div class="progress-track">
-              <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
-            </div>
-          </div>
-        </div>
-      </SectionCard>
+  <BotHeader />
+  
+  <div class="insights-container" role="main">
+    <div class="insights-header">
+      <h2 class="insights-title">Your Insights</h2>
+      <p class="insights-subtitle">Emotional growth over time</p>
     </div>
     
-    <BottomNavigation {currentTab} />
-  </PageContainer>
+    <!-- Progress Message -->
+    <div class="progress-card">
+      <div class="progress-icon">
+        <Icon icon="mdi:heart-circle" width="48" color="#7c3aed" />
+      </div>
+      <div class="progress-content">
+        <h3 class="progress-title">Great progress!</h3>
+        <p class="progress-text">You've been more open lately. I've noticed you're expressing emotions more clearly and identifying triggers faster. Keep up the amazing work! 🌟</p>
+      </div>
+    </div>
+    
+    <!-- Most Common Emotions -->
+    <SectionCard>
+      <div class="card-title-row">
+        <Icon icon="mdi:heart-outline" width="24" color="#7c3aed" />
+        <h3 class="card-title">Most Common Emotions</h3>
+      </div>
+      <div class="emotions-list">
+        {#each commonEmotions as emotion}
+          <div class="emotion-row">
+            <div class="emotion-info">
+              <span class="emotion-emoji">{emotion.emoji}</span>
+              <span class="emotion-label">{emotion.name}</span>
+            </div>
+            <div class="emotion-bar-container">
+              <div class="emotion-bar" style="width: {emotion.width}; background: {emotion.color};"></div>
+            </div>
+            <span class="emotion-count">{emotion.count}</span>
+          </div>
+        {/each}
+      </div>
+    </SectionCard>
+    
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <Icon icon="mdi:calendar-blank" width="40" color="#a78bfa" />
+        <div class="stat-number">28</div>
+        <div class="stat-label">Days Tracking</div>
+      </div>
+      <div class="stat-card">
+        <Icon icon="mdi:star-outline" width="40" color="#a78bfa" />
+        <div class="stat-number">156</div>
+        <div class="stat-label">Emotions Logged</div>
+      </div>
+    </div>
+    
+    <!-- Mood Trend -->
+    <SectionCard>
+      <div class="card-title-row">
+        <Icon icon="mdi:chart-line" width="24" color="#7c3aed" />
+        <h3 class="card-title">Mood Trend (Last 7 Days)</h3>
+      </div>
+      <div class="chart-container">
+        <div class="chart-y-axis">
+          <span class="y-label">10</span>
+          <span class="y-label">6</span>
+          <span class="y-label">3</span>
+          <span class="y-label">0</span>
+        </div>
+        <div class="chart-content">
+          <svg class="mood-chart" viewBox="0 0 280 120" preserveAspectRatio="none" aria-label="Mood trend chart">
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:0.05" />
+              </linearGradient>
+            </defs>
+            <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
+                  fill="url(#gradient)" stroke="none"/>
+            <path d="M 0 60 L 40 50 L 80 60 L 120 40 L 160 30 L 200 20 L 240 30 L 280 35" 
+                  fill="none" stroke="#8b5cf6" stroke-width="3"/>
+          </svg>
+          <div class="chart-x-axis">
+            {#each moodData as data}
+              <span class="x-label">{data.day}</span>
+            {/each}
+          </div>
+        </div>
+      </div>
+    </SectionCard>
+    
+    <!-- Emotional Growth Progress -->
+    <SectionCard>
+      <h3 class="card-title">Emotional Growth Progress</h3>
+      <div class="progress-bars">
+        <div class="progress-item">
+          <div class="progress-label-row">
+            <span class="progress-label">Emotion Awareness</span>
+            <span class="progress-percentage">85%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+          </div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label-row">
+            <span class="progress-label">Emotional Vocabulary</span>
+            <span class="progress-percentage">72%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 72%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+          </div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label-row">
+            <span class="progress-label">Trigger Recognition</span>
+            <span class="progress-percentage">68%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 68%; background: linear-gradient(90deg, #a78bfa 0%, #8b5cf6 100%);"></div>
+          </div>
+        </div>
+      </div>
+    </SectionCard>
+  </div>
+  
+  <BottomNavigation {currentTab} />
 </div>
 
 <style>

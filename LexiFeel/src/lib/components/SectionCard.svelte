@@ -2,7 +2,6 @@
   /**
    * SectionCard - A reusable card component for sections with consistent styling
    */
-  export let noBorder: boolean = false;
 </script>
 
 <div class="section-card">
@@ -25,10 +24,5 @@
       border-radius: 20px;
       margin-bottom: 20px;
     }
-  }
-  
-  .section-card.no-border {
-    border: none;
-    padding: 0;
   }
 </style>
