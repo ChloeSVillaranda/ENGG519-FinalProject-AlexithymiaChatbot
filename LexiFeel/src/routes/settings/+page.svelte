@@ -1,4 +1,5 @@
 <script lang="ts">
+  import BotHeader from '$lib/components/BotHeader.svelte';
   import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
   import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   import Icon from '@iconify/svelte';
@@ -37,15 +38,7 @@
 </script>
 
 <div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
+  <BotHeader />
   
   <div class="settings-container" role="main">
     <div class="settings-header">

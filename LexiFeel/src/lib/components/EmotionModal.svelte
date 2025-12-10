@@ -17,11 +17,35 @@
       onClose();
     }
   }
+  
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      onClose();
+    }
+  }
+  
+  function handleBackdropKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (e.target === e.currentTarget) {
+        onClose();
+      }
+    }
+  }
 </script>
 
 {#if emotion}
-  <div class="modal-backdrop" on:click={handleBackdropClick} role="dialog" aria-modal="true" aria-labelledby="emotion-title">
-    <div class="modal-wrapper">
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+  <div 
+    class="modal-backdrop" 
+    on:click={handleBackdropClick}
+    on:keydown={handleBackdropKeyDown}
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="emotion-title"
+    tabindex="-1"
+  >
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div class="modal-wrapper" on:keydown={handleKeyDown} role="document">
       <div class="modal-content">
         <button class="close-button" on:click={onClose} aria-label="Close modal">
           <Icon icon="mdi:close" width={28} color="#6b7280" />
