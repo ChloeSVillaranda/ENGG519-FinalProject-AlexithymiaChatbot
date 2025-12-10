@@ -4,6 +4,7 @@
   import TabNavigation from '$lib/components/TabNavigation.svelte';
   import SectionCard from '$lib/components/SectionCard.svelte';
   import Icon from '@iconify/svelte';
+  import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   
   let currentTab = 'insights';
   
@@ -152,7 +153,7 @@
       </SectionCard>
     </div>
     
-    <TabNavigation {currentTab} />
+    <BottomNavigation {currentTab} />
   </PageContainer>
 </div>
 
@@ -441,7 +442,7 @@
   
   @media (min-width: 769px) {
     .chat-container {
-      max-width: 480px;
+      max-width: 600px;
       margin: 0 auto;
     }
   }

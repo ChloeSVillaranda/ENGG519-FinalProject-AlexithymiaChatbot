@@ -1,38 +1,54 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
+  import BottomNavigation from '$lib/components/BottomNavigation.svelte';
+  import type { Message, TrustState } from '$lib/types';
+  import { debugTrustOverride } from '$lib/stores/trustOverride';
 
-  let messages = [
-    {
-      id: 1,
-      type: 'bot',
-      text: "Hi there! I'm here to help you explore and understand your emotions. Let's start with what you notice in your body. How do you physically feel right now?",
-      time: '07:20 PM'
-    }
-  ];
-  
   let inputText = '';
   let currentTab = 'chat';
-  
-  function sendMessage() {
-    if (inputText.trim()) {
-      messages = [...messages, {
-        id: messages.length + 1,
-        type: 'user',
-        text: inputText,
-        time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-      }];
-      inputText = '';
-      
-      setTimeout(() => {
-        messages = [...messages, {
-          id: messages.length + 1,
-          type: 'bot',
-          text: "Thank you for sharing. That's a good start in recognizing what's happening in your body. Can you tell me more about what emotions you might be feeling?",
-          time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-        }];
-      }, 1000);
+  let trustState: TrustState | null = null;
+  let messages: Message[] = [
+    {
+      id: crypto.randomUUID(),
+      role: "assistant",
+      text: "Hi there! I'm here to help you explore and understand what you notice. What physical sensations are showing up right now?",
+      time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
     }
+  ];
+
+  async function sendMessage() {
+    if (!inputText.trim()) return;
+
+    // Add user's message
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      text: inputText,
+      time: new Date().toLocaleTimeString('en-US', { hour: "numeric", minute: "2-digit" })
+    };
+
+    messages = [...messages, userMessage];
+    inputText = '';
+
+    // Call backend
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, trustState, debugTrustOverride: $debugTrustOverride })
+    });
+
+    if (!res.ok) {
+      console.error("Backend error");
+      return;
+    }
+
+    const data = await res.json();
+
+    const botMessage: Message = data.message;
+    trustState = data.trustState;
+
+    // Add bot message
+    messages = [...messages, botMessage];
   }
   
   function handleKeyPress(event: KeyboardEvent) {
@@ -40,14 +56,6 @@
       event.preventDefault();
       sendMessage();
     }
-  }
-  
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
   }
 </script>
 
@@ -61,10 +69,25 @@
       <p class="bot-status">Always here to listen</p>
     </div>
   </header>
+
+  {#if trustState}
+    <div class="trust-debug">
+      <strong>Trust Band:</strong> {trustState.band}<br>
+      <strong>Trust Factor:</strong> {trustState.trustFactor.toFixed(3)}<br>
+
+      <details>
+        <summary>Metrics</summary>
+        <div class="metric-line">Avg Length: {trustState.metrics.avgMessageLength.toFixed(1)}</div>
+        <div class="metric-line">Self-disclosure: {trustState.metrics.selfDisclosure.toFixed(2)}</div>
+        <div class="metric-line">Repair success: {trustState.metrics.repairSuccess.toFixed(2)}</div>
+        <div class="metric-line">Sessions: {trustState.metrics.sessionCount}</div>
+      </details>
+    </div>
+  {/if}
   
   <div class="messages-container">
     {#each messages as message}
-      <div class="message {message.type}">
+      <div class="message {message.role}">
         <div class="message-content">
           <p>{message.text}</p>
           <span class="message-time">{message.time}</span>
@@ -100,38 +123,7 @@
     </button>
   </div>
   
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => currentTab = 'chat'}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
+  <BottomNavigation {currentTab} />
 </div>
 
 <style>
@@ -139,9 +131,11 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
     max-width: 100%;
     background: white;
     overflow: hidden;
+    margin: 0 auto;
   }
   
   .chat-header {
@@ -152,6 +146,31 @@
     background: white;
     border-bottom: 1px solid #f3f4f6;
     flex-shrink: 0;
+  }
+
+  .trust-debug {
+    background: #f3e8ff;
+    color: #5b21b6;
+    border-left: 4px solid #a78bfa;
+    padding: 12px 16px;
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.95;
+    flex-shrink: 0;
+  }
+
+  .trust-debug summary {
+    cursor: pointer;
+    margin-top: 6px;
+    font-weight: 600;
+    color: #7c3aed;
+  }
+
+  .metric-line {
+    padding-left: 10px;
+    font-size: 13px;
+    margin-top: 4px;
+    color: #4c1d95;
   }
   
   .bot-avatar {
@@ -196,7 +215,7 @@
     margin-bottom: clamp(12px, 2.5vw, 16px);
   }
   
-  .message.bot {
+  .message.assistant {
     justify-content: flex-start;
   }
   
@@ -210,7 +229,7 @@
     border-radius: clamp(18px, 4vw, 24px);
   }
   
-  .message.bot .message-content {
+  .message.assistant .message-content {
     background: #f3e8ff;
     color: #5b21b6;
     border-bottom-left-radius: 6px;
@@ -334,75 +353,9 @@
     background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
   }
   
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #f3f4f6;
-    padding: clamp(8px, 2vw, 12px) 0;
-    flex-shrink: 0;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: clamp(5px, 1.5vw, 8px) clamp(6px, 1.5vw, 12px);
-    transition: all 0.2s;
-    border-radius: 12px;
-    color: #9ca3af;
-    min-width: 0;
-    flex: 1;
-    max-width: clamp(70px, 15vw, 90px);
-  }
-  
-  .nav-item:hover {
-    background: #faf5ff;
-  }
-  
-  .nav-item.active {
-    color: #7c3aed;
-  }
-  
-  .nav-item.active .icon-wrapper {
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 14px;
-    padding: clamp(5px, 1.2vw, 8px) clamp(10px, 2.5vw, 16px);
-  }
-  
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item:not(.active) .icon-wrapper {
-    padding: clamp(5px, 1.2vw, 8px) 0;
-  }
-  
-  .nav-label {
-    font-size: clamp(10px, 2.2vw, 12px);
-    font-weight: 500;
-    transition: color 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  
-  .nav-item.active .nav-label {
-    color: #7c3aed;
-    font-weight: 600;
-  }
-  
   @media (min-width: 769px) {
     .chat-container {
-      max-width: 480px;
+      max-width: 600px;
       margin: 0 auto;
     }
   }

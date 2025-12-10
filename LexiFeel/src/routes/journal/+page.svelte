@@ -5,6 +5,7 @@
   import SectionCard from '$lib/components/SectionCard.svelte';
   import PrimaryButton from '$lib/components/PrimaryButton.svelte';
   import Icon from '@iconify/svelte';
+  import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   
   let currentTab = 'journal';
   
@@ -105,7 +106,7 @@
     </p>
   </div>
   
-  <TabNavigation {currentTab} />
+  <BottomNavigation {currentTab} />
 </div>
 
 <style>
@@ -413,7 +414,7 @@
   
   @media (min-width: 769px) {
     .chat-container {
-      max-width: 480px;
+      max-width: 600px;
       margin: 0 auto;
     }
     

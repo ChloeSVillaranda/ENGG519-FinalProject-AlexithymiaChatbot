@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation';
   import Icon from '@iconify/svelte';
   import EmotionModal from '$lib/components/EmotionModal.svelte';
+  import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   
   let currentTab = 'emotion-guide';
   let selectedEmotion: any = null;
@@ -121,15 +122,6 @@
     }
   ];
   
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'chat') goto('/chat');
-    else if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
-  }
-  
   function openEmotionModal(emotion: any) {
     selectedEmotion = emotion;
   }
@@ -172,38 +164,7 @@
     </div>
   </div>
   
-  <nav class="bottom-nav">
-    <button class="nav-item {currentTab === 'chat' ? 'active' : ''}" on:click={() => navigateToTab('chat')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:message-text-outline" width="28" />
-      </div>
-      <span class="nav-label">Chat</span>
-    </button>
-    <button class="nav-item {currentTab === 'emotion-guide' ? 'active' : ''}" on:click={() => navigateToTab('emotion-guide')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:heart-outline" width="28" />
-      </div>
-      <span class="nav-label">Emotion Guide</span>
-    </button>
-    <button class="nav-item {currentTab === 'journal' ? 'active' : ''}" on:click={() => navigateToTab('journal')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:book-outline" width="28" />
-      </div>
-      <span class="nav-label">Journal</span>
-    </button>
-    <button class="nav-item {currentTab === 'insights' ? 'active' : ''}" on:click={() => navigateToTab('insights')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:chart-bar" width="28" />
-      </div>
-      <span class="nav-label">Insights</span>
-    </button>
-    <button class="nav-item {currentTab === 'settings' ? 'active' : ''}" on:click={() => navigateToTab('settings')}>
-      <div class="icon-wrapper">
-        <Icon icon="mdi:cog-outline" width="28" />
-      </div>
-      <span class="nav-label">Settings</span>
-    </button>
-  </nav>
+  <BottomNavigation {currentTab} />
 </div>
 
 <EmotionModal emotion={selectedEmotion} onClose={closeEmotionModal} />
@@ -324,75 +285,9 @@
     font-weight: 600;
   }
   
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #f3f4f6;
-    padding: clamp(8px, 2vw, 12px) 0;
-    flex-shrink: 0;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: clamp(5px, 1.5vw, 8px) clamp(6px, 1.5vw, 12px);
-    transition: all 0.2s;
-    border-radius: 12px;
-    color: #9ca3af;
-    min-width: 0;
-    flex: 1;
-    max-width: clamp(70px, 15vw, 90px);
-  }
-  
-  .nav-item:hover {
-    background: #faf5ff;
-  }
-  
-  .nav-item.active {
-    color: #7c3aed;
-  }
-  
-  .nav-item.active .icon-wrapper {
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 14px;
-    padding: 6px 12px;
-  }
-  
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item:not(.active) .icon-wrapper {
-    padding: 6px 0;
-  }
-  
-  .nav-label {
-    font-size: 11px;
-    font-weight: 500;
-    transition: color 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  
-  .nav-item.active .nav-label {
-    color: #7c3aed;
-    font-weight: 600;
-  }
-  
   @media (min-width: 769px) {
     .chat-container {
-      max-width: 480px;
+      max-width: 600px;
       margin: 0 auto;
     }
   }

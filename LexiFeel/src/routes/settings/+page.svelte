@@ -1,13 +1,8 @@
 <script lang="ts">
-  import PageContainer from '$lib/components/PageContainer.svelte';
-  import BotHeader from '$lib/components/BotHeader.svelte';
-  import TabNavigation from '$lib/components/TabNavigation.svelte';
-  import SectionCard from '$lib/components/SectionCard.svelte';
   import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
-  import PrimaryButton from '$lib/components/PrimaryButton.svelte';
+  import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   import Icon from '@iconify/svelte';
   import { debugTrustOverride } from '$lib/stores/trustOverride';
-  import { goto } from '$app/navigation';
 
   let currentTab = 'settings';
   let selectedOverride: string | null = null;
@@ -22,15 +17,6 @@
   let voiceMode = false;
   let textSize = 'medium';
   let readingMode = false;
-  
-  function navigateToTab(tab: string) {
-    currentTab = tab;
-    if (tab === 'chat') goto('/chat');
-    else if (tab === 'emotion-guide') goto('/emotion-guide');
-    else if (tab === 'journal') goto('/journal');
-    else if (tab === 'insights') goto('/insights');
-    else if (tab === 'settings') goto('/settings');
-  }
   
   function saveChanges() {
     console.log('Saving settings:', { 
@@ -230,7 +216,7 @@
     </button>
   </div>
   
-  <TabNavigation {currentTab} />
+  <BottomNavigation {currentTab} />
 </div>
 
 <style>
@@ -238,9 +224,11 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
     max-width: 100%;
     background: white;
     overflow: hidden;
+    margin: 0 auto;
   }
   
   .chat-header {
@@ -492,75 +480,9 @@
     transform: translateY(-2px);
   }
   
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    border-top: 1px solid #f3f4f6;
-    padding: 10px 0 12px;
-    flex-shrink: 0;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 6px 8px;
-    transition: all 0.2s;
-    border-radius: 12px;
-    color: #9ca3af;
-    min-width: 0;
-    flex: 1;
-    max-width: 80px;
-  }
-  
-  .nav-item:hover {
-    background: #faf5ff;
-  }
-  
-  .nav-item.active {
-    color: #7c3aed;
-  }
-  
-  .nav-item.active .icon-wrapper {
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    border-radius: 14px;
-    padding: 6px 12px;
-  }
-  
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-item:not(.active) .icon-wrapper {
-    padding: 6px 0;
-  }
-  
-  .nav-label {
-    font-size: 11px;
-    font-weight: 500;
-    transition: color 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  
-  .nav-item.active .nav-label {
-    color: #7c3aed;
-    font-weight: 600;
-  }
-  
   @media (min-width: 769px) {
     .chat-container {
-      max-width: 480px;
+      max-width: 600px;
       margin: 0 auto;
       height: 100vh;
     }
@@ -640,15 +562,6 @@
       padding: 16px;
       font-size: 18px;
       margin-bottom: 20px;
-    }
-    
-    .nav-item {
-      padding: 8px 12px;
-      max-width: none;
-    }
-    
-    .nav-label {
-      font-size: 12px;
     }
   }
 </style>
