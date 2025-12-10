@@ -3,6 +3,7 @@
   import Icon from '@iconify/svelte';
   import EmotionModal from '$lib/components/EmotionModal.svelte';
   import BottomNavigation from '$lib/components/BottomNavigation.svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
   
   let currentTab = 'emotion-guide';
   let selectedEmotion: any = null;
@@ -132,15 +133,7 @@
 </script>
 
 <div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
+  <BotHeader />
   
   <div class="emotion-guide-container">
     <div class="guide-header">

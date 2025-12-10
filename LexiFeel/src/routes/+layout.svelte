@@ -1,4 +1,16 @@
-<script>
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { darkMode } from '$lib/stores/theme';
+  import '../app.css';
+
+  onMount(() => {
+    // Apply initial dark mode state
+    const unsubscribe = darkMode.subscribe(isDark => {
+      document.documentElement.classList.toggle('dark', isDark);
+    });
+
+    return unsubscribe;
+  });
 </script>
 
 <slot />

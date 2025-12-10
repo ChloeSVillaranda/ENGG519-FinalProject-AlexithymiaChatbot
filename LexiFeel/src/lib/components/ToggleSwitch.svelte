@@ -7,12 +7,10 @@
 
 <div class="toggle-item">
   <div class="toggle-info">
-    <label for={id} class="toggle-label">{label}</label>
-    {#if description}
-      <span class="toggle-description">{description}</span>
-    {/if}
+    <span class="toggle-label">{label}</span>
+    <span class="toggle-description">{description}</span>
   </div>
-  <label class="toggle-switch">
+  <label class="toggle-switch" for={id}>
     <input type="checkbox" {id} bind:checked />
     <span class="slider"></span>
   </label>

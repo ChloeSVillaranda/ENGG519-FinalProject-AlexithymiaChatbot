@@ -1,8 +1,10 @@
 <script lang="ts">
+  import BotHeader from '$lib/components/BotHeader.svelte';
   import ToggleSwitch from '$lib/components/ToggleSwitch.svelte';
   import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   import Icon from '@iconify/svelte';
   import { debugTrustOverride } from '$lib/stores/trustOverride';
+  import { darkMode as darkModeStore } from '$lib/stores/theme';
 
   let currentTab = 'settings';
   let selectedOverride: string | null = null;
@@ -17,6 +19,14 @@
   let voiceMode = false;
   let textSize = 'medium';
   let readingMode = false;
+  
+  // Subscribe to dark mode store
+  $: darkMode = $darkModeStore;
+  
+  // Update when toggle changes
+  $: if (darkMode !== $darkModeStore) {
+    darkModeStore.set(darkMode);
+  }
   
   function saveChanges() {
     console.log('Saving settings:', { 
@@ -37,15 +47,7 @@
 </script>
 
 <div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
+  <BotHeader />
   
   <div class="settings-container" role="main">
     <div class="settings-header">
@@ -150,7 +152,7 @@
     <!-- Appearance Section -->
     <div class="settings-card">
       <div class="card-header">
-        <Icon icon="mdi:moon-waning-crescent" width="24" color="#7c3aed" />
+        <Icon icon="mdi:palette-outline" width="24" color="#7c3aed" />
         <h3>Appearance</h3>
       </div>
       

@@ -157,54 +157,16 @@
   </PageContainer>
 </div>
 
-
 <style>
   .chat-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
     max-width: 100%;
     background: white;
     overflow: hidden;
-  }
-  
-  .chat-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    background: white;
-    border-bottom: 1px solid #f3f4f6;
-    flex-shrink: 0;
-  }
-  
-  .bot-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .bot-info {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .bot-name {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .bot-status {
-    margin: 2px 0 0 0;
-    font-size: 13px;
-    color: #a78bfa;
+    margin: 0 auto;
   }
   
   .insights-container {
@@ -248,6 +210,7 @@
   
   .progress-content {
     flex: 1;
+    min-width: 0;
   }
   
   .progress-title {
@@ -379,6 +342,7 @@
   
   .chart-content {
     flex: 1;
+    min-width: 0;
   }
   
   .mood-chart {
@@ -443,7 +407,6 @@
   @media (min-width: 769px) {
     .chat-container {
       max-width: 600px;
-      margin: 0 auto;
     }
   }
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
+  import BotHeader from '$lib/components/BotHeader.svelte';
   import BottomNavigation from '$lib/components/BottomNavigation.svelte';
   import type { Message, TrustState } from '$lib/types';
   import { debugTrustOverride } from '$lib/stores/trustOverride';
@@ -60,15 +61,7 @@
 </script>
 
 <div class="chat-container">
-  <header class="chat-header">
-    <div class="bot-avatar">
-      <Icon icon="mdi:heart" width="32" color="#7c3aed" />
-    </div>
-    <div class="bot-info">
-      <h2 class="bot-name">Feelio</h2>
-      <p class="bot-status">Always here to listen</p>
-    </div>
-  </header>
+  <BotHeader />
 
   {#if trustState}
     <div class="trust-debug">
@@ -138,16 +131,6 @@
     margin: 0 auto;
   }
   
-  .chat-header {
-    display: flex;
-    align-items: center;
-    gap: clamp(10px, 2vw, 12px);
-    padding: clamp(14px, 3vw, 16px) clamp(16px, 4vw, 20px);
-    background: white;
-    border-bottom: 1px solid #f3f4f6;
-    flex-shrink: 0;
-  }
-
   .trust-debug {
     background: #f3e8ff;
     color: #5b21b6;
@@ -171,35 +154,6 @@
     font-size: 13px;
     margin-top: 4px;
     color: #4c1d95;
-  }
-  
-  .bot-avatar {
-    width: clamp(45px, 10vw, 60px);
-    height: clamp(45px, 10vw, 60px);
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .bot-info {
-    flex: 1;
-    min-width: 0;
-  }
-  
-  .bot-name {
-    margin: 0;
-    font-size: clamp(16px, 3.5vw, 20px);
-    font-weight: 600;
-    color: #1f2937;
-  }
-  
-  .bot-status {
-    margin: 2px 0 0 0;
-    font-size: clamp(12px, 2.5vw, 14px);
-    color: #a78bfa;
   }
   
   .messages-container {

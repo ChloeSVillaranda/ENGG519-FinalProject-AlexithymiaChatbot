@@ -72,3 +72,365 @@ a:hover {
   white-space: nowrap;
   border-width: 0;
 }
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #fefefe;
+  --bg-card: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border-color: #f3f4f6;
+  --purple-light: #e9d5ff;
+  --purple-main: #7c3aed;
+  --purple-dark: #6b21a8;
+  --message-bot-bg: #f3e8ff;
+  --message-bot-text: #5b21b6;
+}
+
+html.dark {
+  --bg-primary: #1a1625;
+  --bg-secondary: #241b2f;
+  --bg-card: #2d2436;
+  --text-primary: #f3e8ff;
+  --text-secondary: #e9d5ff;
+  --text-tertiary: #c4b5fd;
+  --border-color: #3d2f52;
+  --purple-light: #4c1d95;
+  --purple-main: #a78bfa;
+  --purple-dark: #e9d5ff;
+  --message-bot-bg: #3d2f52;
+  --message-bot-text: #e9d5ff;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container backgrounds */
+.dark .chat-container,
+.dark .settings-container,
+.dark .journal-container,
+.dark .insights-container,
+.dark .emotion-guide-container,
+.dark .messages-container {
+  background: var(--bg-primary) !important;
+}
+
+/* Header and navigation */
+.dark .chat-header,
+.dark .bottom-nav,
+.dark .input-section,
+.dark .reflect-section {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Primary text */
+.dark .bot-name,
+.dark .settings-title,
+.dark .journal-title,
+.dark .insights-title,
+.dark .card-title,
+.dark .section-title,
+.dark .tone-label,
+.dark .progress-title,
+.dark .emotion-label,
+.dark .stat-number,
+.dark .progress-label,
+.dark .card-header h3 {
+  color: var(--text-primary) !important;
+}
+
+/* Secondary text */
+.dark .bot-status,
+.dark .settings-subtitle,
+.dark .journal-date,
+.dark .insights-subtitle,
+.dark .tone-description,
+.dark .progress-text,
+.dark .section-text,
+.dark .button-label,
+.dark .input-label,
+.dark .stat-label,
+.dark .privacy-note,
+.dark .progress-percentage,
+.dark .y-label,
+.dark .x-label,
+.dark .mood-day {
+  color: var(--text-secondary) !important;
+}
+
+/* Cards and containers */
+.dark .settings-card,
+.dark .reflection-card,
+.dark .stat-card,
+.dark .progress-card,
+.dark .emotion-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Input fields */
+.dark .text-input,
+.dark .reflection-textarea,
+.dark .input-container,
+.dark select {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .text-input::placeholder,
+.dark .reflection-textarea::placeholder,
+.dark .input-container input::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+.dark .input-container input {
+  color: var(--text-primary) !important;
+}
+
+/* Messages */
+.dark .message.assistant .message-content {
+  background: var(--message-bot-bg) !important;
+  color: var(--message-bot-text) !important;
+}
+
+.dark .message.user .message-content {
+  background: var(--purple-main) !important;
+  color: var(--bg-primary) !important;
+}
+
+.dark .message-time {
+  color: var(--text-tertiary) !important;
+}
+
+/* Buttons */
+.dark .reflect-button,
+.dark .setting-button {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+.dark .reflect-button:hover,
+.dark .setting-button:hover {
+  background: var(--bg-secondary) !important;
+}
+
+.dark .icon-button {
+  color: var(--text-secondary) !important;
+}
+
+.dark .icon-button:hover {
+  color: var(--purple-main) !important;
+}
+
+/* Tone selection */
+.dark .tone-content {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .tone-option.selected .tone-content {
+  background: var(--bg-secondary) !important;
+  border-color: var(--purple-main) !important;
+}
+
+.dark .tone-indicator {
+  border-color: var(--border-color) !important;
+  background: var(--bg-secondary) !important;
+}
+
+.dark .tone-option.selected .tone-indicator {
+  border-color: var(--purple-main) !important;
+  background: var(--purple-main) !important;
+}
+
+/* Emotion bars */
+.dark .emotion-bar-container {
+  background: var(--bg-secondary) !important;
+}
+
+.dark .emotion-count {
+  color: var(--purple-main) !important;
+}
+
+/* Trust debug */
+.dark .trust-debug {
+  background: var(--bg-secondary) !important;
+  border-left-color: var(--purple-main) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .trust-debug summary {
+  color: var(--purple-main) !important;
+}
+
+.dark .metric-line {
+  color: var(--text-secondary) !important;
+}
+
+/* Quote */
+.dark .quote {
+  color: var(--text-tertiary) !important;
+}
+
+/* Navigation */
+.dark .nav-label {
+  color: var(--text-tertiary) !important;
+}
+
+.dark .nav-item.active .nav-label {
+  color: var(--purple-main) !important;
+}
+
+.dark .nav-item:hover {
+  background: var(--bg-secondary) !important;
+}
+
+/* Journal specific dark mode fixes */
+.dark .journal-header,
+.dark .card-title {
+  color: var(--text-primary) !important;
+}
+
+.dark .journal-date,
+.dark .mood-day,
+.dark .quote {
+  color: var(--text-secondary) !important;
+}
+
+.dark .mood-tracker-card,
+.dark .reflection-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .mood-item,
+.dark .emotion-name {
+  color: var(--text-primary) !important;
+}
+
+/* AI suggestions button in dark mode */
+.dark .ai-suggestions-button {
+  color: var(--purple-main) !important;
+}
+
+.dark .ai-suggestions-button:hover {
+  color: var(--purple-dark) !important;
+}
+
+/* Download button */
+.dark .download-button {
+  color: var(--purple-main) !important;
+}
+
+/* Section card titles in dark mode */
+.dark h3.card-title,
+.dark .card-header h3 {
+  color: var(--text-primary) !important;
+}
+
+/* Make sure all placeholders are visible in dark mode */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-tertiary) !important;
+  opacity: 0.6;
+}
+
+/* Emotion Modal dark mode */
+.dark .modal-backdrop {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.dark .modal-content {
+  background: var(--bg-card) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+.dark .close-button {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .close-button:hover {
+  background: var(--bg-primary) !important;
+}
+
+.dark .modal-title {
+  color: inherit !important;
+}
+
+.dark .section-title {
+  color: var(--text-primary) !important;
+}
+
+.dark .section-text {
+  color: var(--text-secondary) !important;
+}
+
+.dark .sensation-item {
+  color: var(--text-secondary) !important;
+}
+
+.dark .sensation-item::before {
+  color: var(--purple-main) !important;
+}
+
+.dark .modal-scroll::-webkit-scrollbar-track {
+  background: var(--bg-secondary) !important;
+}
+
+.dark .modal-scroll::-webkit-scrollbar-thumb {
+  background: var(--purple-main) !important;
+}
+
+.dark .modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-dark) !important;
+}
+
+.dark .modal-scroll {
+  scrollbar-color: var(--purple-main) var(--bg-secondary) !important;
+}
+
+/* Dim emotion modal header backgrounds in dark mode */
+.dark .modal-header {
+  background: var(--bg-card) !important;
+  filter: none !important;
+}
+
+/* Remove the specific color overrides */
+.dark .modal-header[style*="background:"] {
+  background: var(--bg-card) !important;
+}
+
+/* Fix toggle switch labels in dark mode */
+.dark .toggle-label {
+  color: var(--text-primary) !important;
+}
+
+.dark .toggle-description {
+  color: var(--text-secondary) !important;
+}
+
+/* Emotion Guide dark mode fixes */
+.dark .guide-header h2 {
+  color: var(--text-primary) !important;
+}
+
+.dark .guide-subtitle {
+  color: var(--text-secondary) !important;
+}
+
+.dark .emotion-card {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .emotion-name {
+  color: var(--text-primary) !important;
+}
